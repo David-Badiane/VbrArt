@@ -1,4 +1,5 @@
 s.freeAll;
+
 (
 s.options.memSize= 8192*2;
 
@@ -13,17 +14,26 @@ s.waitForBoot({
 ~listenToPython = false;
 ~tonality = 0;
 ~adjust = Array.fill(12, { arg i; 0 });
-	~durationForRole = Array.fill(12, { arg i; [1,2,4].choose });
+~durationForRole = Array.fill(12, { arg i; [1,2,4].choose });
 ~octave = 0;
 
 // Buffers used in granulator Grains, for vibratingWater
-	b = Buffer.readChannel(server: s, path:"C:/Users/BintuAylaMaria/Desktop/empty_vessels.wav", channels: [0]);
-	c = Buffer.readChannel(server: s, path:"C:/Users/BintuAylaMaria/Desktop/water_dripping.wav", channels: [0]);
+	b = Buffer.readChannel(server: s, path:"~/Music/empty_vessels.wav", channels: [0]);
+	c = Buffer.readChannel(server: s, path:"~/Music/water_dripping.wav", channels: [0]);
+	e = Buffer.cueSoundFile(server: s, path:"~/Music/alberto_balsam.wav", channels: [0]);
 
 // ----------------------------------------------------------------------------------------------------
 // --------------------------------------------  SYNTHDEFS  -------------------------------------------
 // ----------------------------------------------------------------------------------------------------
+//  Init Synth
 
+	SynthDef(\init,
+		{
+		arg gate;
+		var env = EnvGen.kr(Env([0, 1, 1, 0], [1, 6.5, 3.5], [2, 0, 0, -2]), gate, doneAction:2);
+			Out.ar(0, DiskIn.ar(2, e.bufnum, loop: 0)*env);
+		}
+	).add;
 
 // Sinusoidal signal used for vibratingPlate
 	SynthDef.new(
@@ -51,7 +61,7 @@ s.waitForBoot({
 
 // Water drop - used for vibratingWater when the user stimulates the water
 
-	SynthDef(\wdrop, { |out, gate = 0, amp = 1, x= 0.1, y = 0.1|
+SynthDef(\wdrop, { |out, gate = 0, amp = 1, x= 0.1, y = 0.1|
     var pan, env, freqdev, sig;
     // use mouse x to control panning
     pan = MouseX.kr(-1, 1);
@@ -108,7 +118,7 @@ s.waitForBoot({
 				damp: 0.5
 			);
 
-		Out.ar(0, LPF.ar(snd, 7500));
+		Out.ar(0, 3*LPF.ar(snd, 7500));
 		}).add;
 
 
@@ -125,38 +135,38 @@ s.waitForBoot({
 
 // CrystalString - used when a string is plucked in vibratingStrings
 
-		SynthDef(\crystalString,{
-			|pShift = 1200, t_trig, freq, delT = 0.5, gSize = 0.5, tDisp = 0.5, fb = 0.25, dw = 0.8|
-			var src, local;
-			src = 2*( Pluck.ar(WhiteNoise.ar(0.1),
-				t_trig,
-				freq.reciprocal,
-				freq.reciprocal,
-				10,
-				coef: 0.4)); // stereo input
-			local = LocalIn.ar(2) + [src, 0];
+	SynthDef(\crystalString,{
+		|pShift = 1200, t_trig, freq, delT = 0.5, gSize = 0.5, tDisp = 0.5, fb = 0.25, dw = 0.8|
+		var src, local;
+		src = 2*( Pluck.ar(WhiteNoise.ar(0.1),
+			t_trig,
+			freq.reciprocal,
+			freq.reciprocal,
+			10,
+		coef: 0.4)); // stereo input
+		local = LocalIn.ar(2) + [src, 0];
 
-			local = Greyhole.ar(
-				local,
-				delT,
-				\damp.kr(0.7),
-				\size.kr(1),
-				\diff.kr(0.5),
-				\fb.kr(0.8),
-				\modDepth.kr(0.5),
-				\modFreq.kr(0.5)
-			);
+		local = Greyhole.ar(
+			local,
+			delT,
+			\damp.kr(0.7),
+			\size.kr(1),
+			\diff.kr(0.5),
+			\fb.kr(0.8),
+			\modDepth.kr(0.5),
+			\modFreq.kr(0.5)
+		);
 
-			local = PitchShift.ar(
-				local,    // stereo audio input
-				gSize,             // grain size
-				((pShift+SinOsc.kr(0.5, 0, 15))/1200 )+1,    // mouse x controls pitch shift ratio
-				0,                 // pitch dispersion
-				tDisp            // time dispersion
-			);
-			LocalOut.ar(local.reverse*fb);
-			Out.ar(0,(local*dw)+(src*(1-dw)));
-		}).add;
+		local = PitchShift.ar(
+			local,    // stereo audio input
+			gSize,             // grain size
+			((pShift+SinOsc.kr(0.5, 0, 15))/1200 )+1,    // mouse x controls pitch shift ratio
+			0,                 // pitch dispersion
+			tDisp            // time dispersion
+		);
+		LocalOut.ar(local.reverse*fb);
+		Out.ar(0,1.5*((local*dw)+(src*(1-dw))));
+	}).add;
 
 // Kalimba - used for melody generation in vibratingStrings
 
@@ -176,41 +186,41 @@ s.waitForBoot({
 		], BPF.ar(PinkNoise.ar, 6500, 0.1) * EnvGen.ar(Env.perc(0.001, 0.01))) * 0.1;
 		snd = (snd*mix) + (click*(1-mix));
 		snd = Mix( snd );
-		Out.ar(out, Pan2.ar(snd, 0, amp));
+		Out.ar(out, 4*Pan2.ar(snd, 0, amp));
 	}).add;
 
 // KalimbaS - same of kalimba, generated with square waves - used for vibratingSunset melody
 
 SynthDef("marimba", {arg freq = 440, amp = 0.4, pan = 0;
-  var snd, env;
-  env = Env.linen(
-   attackTime: 0.015,
-   sustainTime: 1,
-   releaseTime: 0.5,
-   level: amp*2
-  ).kr(doneAction: 2);
-  snd = BPF.ar(
-   in: Saw.ar(0),
-   freq: freq,
-   rq: 0.02
-  );
-  snd = BLowShelf.ar(
-   in: snd,
-   freq: 220,
-   rs: 0.81,
-   db: 12
-  );
+		var snd, env;
+		env = Env.linen(
+			attackTime: 0.015,
+			sustainTime: 1,
+			releaseTime: Rand(0.5,1.5),
+			level: amp*2
+		).kr(doneAction: 2);
+		snd = BPF.ar(
+			in: Saw.ar(0),
+			freq: freq,
+			rq: 0.02
+		);
+		snd = BLowShelf.ar(
+			in: snd,
+			freq: 220,
+			rs: 0.81,
+			db: 12
+		);
 
-  snd = HPF.ar(snd, 500);
+		snd = HPF.ar(snd, 500);
 
-  snd = snd * env;
-  Out.ar(0, Pan2.ar(snd, pan));
- },
- metadata: (
-  credit: "unknown",
-  category: \keyboards,
-  tags: [\percussion, \marimba, \pitched, \keyboard]
- )
+		snd = LPF.ar((Formant.ar(freq, 2760, 1500, 0.0075) + snd) * env, 3500);
+		Out.ar(0, Pan2.ar(snd, pan));
+	},
+	metadata: (
+		credit: "unknown",
+		category: \keyboards,
+		tags: [\percussion, \marimba, \pitched, \keyboard]
+	)
  ).add;
 
 // Chicago Pad - used for chords in vibratingSunset
@@ -256,7 +266,7 @@ SynthDef("marimba", {arg freq = 440, amp = 0.4, pan = 0;
 
 	// sunsetPad - used for chords in vibratingSunset
 		SynthDef(\sunsetPad, {
-			|out = 0, f1 = 200, f2 =  300, cutoff = 700, amp = 0.4|
+			|out = 0, f1 = 200, f2 =  300, cutoff = 1200, amp = 0.7|
 			var snd;
 			//f1 = f1 + SinOsc.kr(0.1, 0, 1, 20);
 			//f2 = f2 + SinOsc.kr(0.1, 0, 1, 30);
@@ -627,9 +637,9 @@ freq.postln;
 			'mel'.postln;
 		// Play
 	freq.postln;
-		Synth(\melodyFM, [ \amp, 0.0000001, \freq, freq]);
-		Synth(\melodyFM, [ \amp, 0.0000001, \freq,4.02*freq]);
-		Synth(\melodyFM, [ \amp, 0.0000001, \freq,8.03*freq]);
+		Synth(\melodyFM, [ \amp, 0.1, \freq, freq]);
+		Synth(\melodyFM, [ \amp, 0.1, \freq,4.02*freq]);
+		Synth(\melodyFM, [ \amp, 0.1, \freq,8.03*freq]);
 
 		dur.wait;
 	})
@@ -667,6 +677,47 @@ NetAddr("127.0.0.1",57120);
 n= NetAddr("127.0.0.1", 47120);
 (
 //  ---------- All settings for the different backgrounds
+//  --INIT--
+OSCdef('init',
+	{
+		arg msg;
+		var freq, amp, cutoff, vibr;
+
+		if(~pureSine.notNil,
+			{~pureSine.set(\gate, 0);
+				~pureSine = nil;},
+			{});
+
+		if(~grains.notNil && ~wdrop.notNil
+			,{~grains.set(\gate, 0);
+			   ~wdrop.set(\gate, 0);
+				~wdrop.free;
+			  ~grains = nil;
+			  ~wdrop = nil;
+			}
+			,{});
+
+		if(~trk.notNil,
+			{~trk.free; ~trk = nil;
+			r.stop; d.free;},
+			{});
+
+		if(~crystalString.notNil
+			,{~crystalString.free;
+				~crystalString = nil;}
+			,{});
+
+		if(~chordPad.notNil
+			,{~chordPad.free;
+				~chordPad = nil;}
+			,{});
+
+
+		~balsam = Synth.new(\init, [\gate, 1]);
+
+	},
+	"/Background/Init",);
+
 // -- PLATE --
 OSCdef('back1',
 	{
@@ -674,6 +725,8 @@ OSCdef('back1',
 		var freq, amp, cutoff, vibr;
 
 		msg.postln;
+		~balsam.set(\gate, 0);
+		~balsam = nil;
 		~pureSine = Synth(\pureSine, [\gate, 1, \freq, ~freqz]);
 
 		if(~grains.notNil && ~wdrop.notNil
