@@ -1,6 +1,6 @@
 # VbrArt
 
-<p align ="center" > <img width ="450" height ="300" src = "/readme_images/first.png"> </p>
+<p align ="center" > <img width ="450" height ="280" src = "/readme_images/first.png"> </p>
 
 ## Introduction
 
