@@ -311,4 +311,9 @@ void initMusic(){
   Object [] args = {1, freq};
   OSCsendMessage("/Background/Plate", args);
   }
+void nextFreq(int delta){
+  freq += delta;
+  if(freq <40) freq = 4000;
+  if(freq >4000) freq =40;
+}
 }

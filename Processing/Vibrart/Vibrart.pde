@@ -19,8 +19,9 @@ VerletPhysics2D physics;     // declare the physics environment where our projec
 // ------------------------------------------- Intro Screen --------------------------------------------------------
 
 PFont font;
+PFont font2;
 ArrayList <WaterDrops> introTexture;
-int introTime = 10000;
+int introTime = 12500;
 
 // ------------------------------------------- Leap Motion --------------------------------------------------------
 
@@ -75,6 +76,7 @@ void setup(){
   
   //----------------------------------------------- SCENARIO - VibratingElement superclass
   font = createFont("Potra.ttf", 32);
+  font2 = createFont("Potra.ttf", 14);
   textFont(font);
   introTexture = new ArrayList <WaterDrops>();
   introTexture.add(new WaterDrops(0.99));
@@ -119,6 +121,7 @@ void draw(){
     scenario.update();
     // update Leap Motion
     updateAndDisplayLeap(); 
+    updateAndDisplayMouse();
   }
 }
 
@@ -239,3 +242,23 @@ void updateAndDisplayLeap(){
 void leapOnConnect() {
   leapConnected = true;
 }
+
+  void updateAndDisplayMouse(){
+   if(scenario.BUTTONSTATE!=0){
+      //boolean state;
+      PVector loc = new PVector(mouseX, mouseY);
+        if(mousePressed && loc.x >10 && loc.x< width-10 && loc.y >10 && loc.y < height-10){
+          fill(0,255,0,100);
+          //state = true; 
+        }
+        else{
+          fill(255,0,0,100);
+          //state = false;
+        }
+        ellipse(loc.x, loc.y, 5,5);
+      }
+     else{
+       textFont(font2);
+       text(str(scenario.vibratingPlate.freq), 12*width/13,height/13);
+       }
+    }
