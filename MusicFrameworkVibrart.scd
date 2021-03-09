@@ -1,5 +1,3 @@
-s.freeAll;
-
 (
 s.options.memSize= 8192*2;
 
@@ -48,7 +46,6 @@ s.waitForBoot({
 			env = EnvGen.kr(Env.asr(3, 0.3, 3, 0), gate, doneAction:2);
 			noise = PinkNoise.ar(nl, 0);
 			sig   = (sig + sub + noise) * env;
-			//sig   = BLowPass4.ar(sig, filt);
 			sig   = MoogFF.ar(sig, filt * 0.5, 0, 0, 1, 0);
 			sig   = Pan2.ar(sig, pan, amp);
 			sig   = FreeVerb2.ar(sig[0], sig[1], 0.25, 0.99, 0.9);
