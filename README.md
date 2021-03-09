@@ -25,18 +25,18 @@ In every background a physic representation of acoustic is depicted:
 The user can play with one background at a time, giving vent to his creativity.
 Interaction happens through Leap Motion tracking or MousePositions tracking.
 
-## Controls
-### General
-<u>Switching between backgrounds<u> :
+## General Controls
+**Switching between backgrounds** :
 1. Arduino Uno buttons;
 2. Up and Down arrows of the keyboard;
-<u>Pointer position<u>:
+**Pointer position**:
 1. Leap Motion;
 2. Mouse;
-<u> Pointer activation <u>:
+**Pointer activation**:
 1. Leap Motion - distance from Leap Motion less than a given threshold;
 2. Mouse - mouse clicked;
-### Background Related controls:
+
+## Background related Controls:
 * vibratingPlate:
   1. Arduino Uno - the potentiometer value regulates the frequency of the simulation;
   2. the frequency of the simulation can be also variated by pressing the mouse;
@@ -52,12 +52,12 @@ Interaction happens through Leap Motion tracking or MousePositions tracking.
     * it releases the string when the mouse left button is released;
 * vibratingSunset:
   1. Leap Motion cursor:
-    * when activated inside the sun, it changes it's modality of the sun's burning and the reference mode for music (<u>changeMode<u>); 
-    * when deactivated inside the sun, it changes the color map colors and refills the sun matrix (<u>scrumble<u>);
+    * when activated inside the sun, it changes it's modality of the sun's burning and the reference mode for music (**changeMode**); 
+    * when deactivated inside the sun, it changes the color map colors and refills the sun matrix (**scrumble**);
   2. Mouse:
-    * when the mouse left button is pressed - <u>changeMode<u>;
+    * when the mouse left button is pressed - **changeMode**;
   3. Keyoard: 
-    * when left arrow of the keyboard is pressed - <u>scrumble<u>;
+    * when left arrow of the keyboard is pressed - **scrumble**;
 ### Arduino Uno setup
 <u> What is needed for the complete setup?<u>:
 1. Ar
