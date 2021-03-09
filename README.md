@@ -29,24 +29,20 @@ Interaction happens through Leap Motion tracking or MousePositions tracking.
 **Switching between backgrounds** :
 * Arduino Uno buttons;
 * Up and Down arrows of the keyboard;
-
 **Pointer position**:
 * Leap Motion;
 * Mouse;
-
 **Pointer activation**:
 * Leap Motion - distance from Leap Motion less than a given threshold;
 * Mouse - mouse clicked;
-
+* 
 ## Background related Controls:
 **vibratingPlate**:
 1. Arduino Uno - the potentiometer value regulates the frequency of the simulation;
 2. the frequency of the simulation can be also variated by pressing the mouse;
-
 **vibratingWater**:
 1. the Leap Motion cursor, when activated, excitates the water;
 2. when the mouse is pressed at a given position, it provides a stimulus; 
-
 **vibratingStrings**:
 1. Leap Motion cursor:
   * when activated around a string, it plucks it; 
@@ -54,7 +50,6 @@ Interaction happens through Leap Motion tracking or MousePositions tracking.
 2. Mouse:
   * when the mouse left button is pressed near the string, it plucks; 
   * it releases the string when the mouse left button is released;
-
 **vibratingSunset**:
 1. Leap Motion cursor:
   * when activated inside the sun, it changes it's modality of the sun's burning and the reference mode for music (**changeMode**); 
@@ -78,8 +73,8 @@ With those elements it's possible to build the circuit depicted below:
 The final implementation should look like this:
 <p align ="center" > <img width ="600" height ="280" src = "/readme_images/arduino_real.jpg"> </p>
 
-### Mouse Interaction
-### Leap Motion
-Any further information can be found in the 'Presentation' power point.
+## Booting the Project
 
+
+Any further information can be found in the 'Presentation' power point.
 Enjoy your play!
