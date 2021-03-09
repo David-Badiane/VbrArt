@@ -51,7 +51,6 @@ Interaction happens through Leap Motion tracking or MousePositions tracking.
 1. Leap Motion cursor:
   * when activated around a string, it plucks it; 
   * it releases the string when deactivated;
-
 2. Mouse:
   * when the mouse left button is pressed near the string, it plucks; 
   * it releases the string when the mouse left button is released;
@@ -60,20 +59,29 @@ Interaction happens through Leap Motion tracking or MousePositions tracking.
 1. Leap Motion cursor:
   * when activated inside the sun, it changes it's modality of the sun's burning and the reference mode for music (**changeMode**); 
   * when deactivated inside the sun, it changes the color map colors and refills the sun matrix (**scrumble**);
-
 2. Mouse:
   * when the mouse left button is pressed - **changeMode**;
-
 3. Keyoard: 
   * when left arrow of the keyboard is pressed - **scrumble**;
 
-### Arduino Uno setup
-<u> What is needed for the complete setup?<u>:
-1. Ar
-2.
+## Arduino Uno setup
+**What is needed for the complete setup?**
+1. Arduino Uno;
+2. Arduino Breadboard;
+3. 4 Button Switches;
+4. 4 Leds;
+5. 1 Potentiometer;
+6. Resistances;
+7. Jumpers;
+8. the Arduino sketch that you can find in the repository;
+
+With those elements it's possible to build the circuit depicted below:
+
+The final implementation should look like this:
+<p align ="center" > <img width ="600" height ="280" src = "/readme_images/arduino_real.jpg"> </p>
+
 ### Mouse Interaction
 ### Leap Motion
-
 Any further information can be found in the 'Presentation' power point.
 
 Enjoy your play!
