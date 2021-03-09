@@ -39,33 +39,33 @@ Interaction happens through Leap Motion tracking or MousePositions tracking.
 * Mouse - mouse clicked;
 
 ## Background related Controls:
-* vibratingPlate:
-  1. Arduino Uno - the potentiometer value regulates the frequency of the simulation;
-  2. the frequency of the simulation can be also variated by pressing the mouse;
+**vibratingPlate**:
+1. Arduino Uno - the potentiometer value regulates the frequency of the simulation;
+2. the frequency of the simulation can be also variated by pressing the mouse;
 
-* vibratingWater:
-  1. the Leap Motion cursor, when activated, excitates the water;
-  2. when the mouse is pressed at a given position, it provides a stimulus; 
- 
-* vibratingStrings:
-  1. Leap Motion cursor:
-    * when activated around a string, it plucks it; 
-    * it releases the string when deactivated;
+**vibratingWater**:
+1. the Leap Motion cursor, when activated, excitates the water;
+2. when the mouse is pressed at a given position, it provides a stimulus; 
 
-  2. Mouse:
-    * when the mouse left button is pressed near the string, it plucks; 
-    * it releases the string when the mouse left button is released;
+**vibratingStrings**:
+1. Leap Motion cursor:
+  * when activated around a string, it plucks it; 
+  * it releases the string when deactivated;
 
-* vibratingSunset:
-  1. Leap Motion cursor:
-    * when activated inside the sun, it changes it's modality of the sun's burning and the reference mode for music (**changeMode**); 
-    * when deactivated inside the sun, it changes the color map colors and refills the sun matrix (**scrumble**);
-  
-  2. Mouse:
-    * when the mouse left button is pressed - **changeMode**;
-    
-  3. Keyoard: 
-    * when left arrow of the keyboard is pressed - **scrumble**;
+2. Mouse:
+  * when the mouse left button is pressed near the string, it plucks; 
+  * it releases the string when the mouse left button is released;
+
+**vibratingSunset**:
+1. Leap Motion cursor:
+  * when activated inside the sun, it changes it's modality of the sun's burning and the reference mode for music (**changeMode**); 
+  * when deactivated inside the sun, it changes the color map colors and refills the sun matrix (**scrumble**);
+
+2. Mouse:
+  * when the mouse left button is pressed - **changeMode**;
+
+3. Keyoard: 
+  * when left arrow of the keyboard is pressed - **scrumble**;
 
 ### Arduino Uno setup
 <u> What is needed for the complete setup?<u>:
