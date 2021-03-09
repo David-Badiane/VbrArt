@@ -18,10 +18,10 @@ The Python code introduces more intelligence in the musical side of the project,
 ## Inside the scene
 The four scenerios consist of four different backgrounds. 
 In every background a physic representation of acoustic is depicted: 
-* in the first background Chladni pattern simulation on a plate is implemented - <u>vibratingPlate<u>; 
-* the second background consists of the simulation of a water drop - <u>vibratingWater<u>;
-* the third background represents a five strings acoustic instrument - <u>vibratingStrings<u>;
-* the fourth background depicts a sunset and relates its elements to the spectrum of a sound, creating a deeper, thoughtful environment - <u>vibratingSunset<u>.
+* the 1st background simulates the Chladni patterns formation process  on a rectangular plate  - **vibratingPlate**; 
+* the 2nd background consists of the simulation of a water drop - **vibratingWater**;
+* the 3rd background represents a five strings acoust**instrument - **vibratingStrings**;
+* the 4th background depicts a sunset and relates its elements to the spectrum of a sound, creating a deeper, thoughtful environment - **vibratingSunset**.
 The user can play with one background at a time, giving vent to his creativity.
 Interaction happens through Leap Motion tracking or MousePositions tracking.
 
@@ -29,20 +29,24 @@ Interaction happens through Leap Motion tracking or MousePositions tracking.
 **Switching between backgrounds** :
 * Arduino Uno buttons;
 * Up and Down arrows of the keyboard;
+
 **Pointer position**:
 * Leap Motion;
 * Mouse;
+
 **Pointer activation**:
 * Leap Motion - distance from Leap Motion less than a given threshold;
 * Mouse - mouse clicked;
-* 
+ 
 ## Background related Controls:
 **vibratingPlate**:
 1. Arduino Uno - the potentiometer value regulates the frequency of the simulation;
 2. the frequency of the simulation can be also variated by pressing the mouse;
+
 **vibratingWater**:
 1. the Leap Motion cursor, when activated, excitates the water;
 2. when the mouse is pressed at a given position, it provides a stimulus; 
+
 **vibratingStrings**:
 1. Leap Motion cursor:
   * when activated around a string, it plucks it; 
@@ -50,6 +54,7 @@ Interaction happens through Leap Motion tracking or MousePositions tracking.
 2. Mouse:
   * when the mouse left button is pressed near the string, it plucks; 
   * it releases the string when the mouse left button is released;
+
 **vibratingSunset**:
 1. Leap Motion cursor:
   * when activated inside the sun, it changes it's modality of the sun's burning and the reference mode for music (**changeMode**); 
