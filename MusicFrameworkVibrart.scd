@@ -18,10 +18,9 @@ s.waitForBoot({
 ~octave = 0;
 
 // Buffers used in granulator Grains, for vibratingWater
-	b = Buffer.readChannel(server: s, path:"~/Music/empty_vessels.wav", channels: [0]);
-	c = Buffer.readChannel(server: s, path:"~/Music/water_dripping.wav", channels: [0]);
-	e = Buffer.cueSoundFile(server: s, path:"~/Music/alberto_balsam.wav", channels: [0]);
-
+	b = Buffer.readChannel(server: s, path: thisProcess.nowExecutingPath.dirname +/+ "/Music/empty_vessels.wav", channels: [0]);
+	c = Buffer.readChannel(server: s, path: thisProcess.nowExecutingPath.dirname +/+ "/Music/water_dripping.wav", channels: [0]);
+	e = Buffer.cueSoundFile(server: s, path: thisProcess.nowExecutingPath.dirname +/+ "/Music/alberto_balsam.wav", channels: [0]);
 // ----------------------------------------------------------------------------------------------------
 // --------------------------------------------  SYNTHDEFS  -------------------------------------------
 // ----------------------------------------------------------------------------------------------------
@@ -85,15 +84,7 @@ SynthDef(\wdrop, { |out, gate = 0, amp = 1, x= 0.1, y = 0.1|
 		    trigRate = (y*200)+2;
 			centerPos = x*BufDur.kr(b);
 
-			// try out various 'rate' lines
-			// (bottom most line to be uncommented will be the one running)
-			//
-			// rate = Dseq([10, 1, 1, 0.5, 0.5, 0.2, 0.1], inf);
 			rate = Dseq([1, 1, 1, 1, 2, 4, 8], inf);
-			// rate = Drand([0.5, 1, 1, 2, 4, 8], inf);
-			// rate = SinOsc.ar(1/3).range(0.5, 1);
-			// rate = LFNoise0.ar(5).range(0.5, 2);
-			// rate = LFSaw.ar(1).range(1/5, 1);
 
 			snd = TGrains.ar(
 				numChannels: 2,
@@ -228,8 +219,6 @@ SynthDef("marimba", {arg freq = 440, amp = 0.4, pan = 0;
 			|out = 0, f1 = 200, f2 =  300, f3 = 400, f4 = 500, cutoff = 500, amp = 0.4|
 			var snd;
 			f1 = f1 + SinOsc.kr(0.1, 0, 1, 20);
-			//f2 = f2 + SinOsc.kr(0.1, 0, 1, 30);
-			//f3 = f3 + SinOsc.kr(0.1, 0, 1, 10);
 			snd = Saw.ar([f1,f2,f3])*0.1;
 			snd = snd + VarSaw.ar(0.99*[f1,f2,f3,f4],0, LFTri.kr(0.3).range(0.25,0.7))*0.1;
 			snd = Mix(snd);
@@ -237,7 +226,6 @@ SynthDef("marimba", {arg freq = 440, amp = 0.4, pan = 0;
 		    snd = FreeVerb.ar(snd ,mix: 0.33, room: 0.5, damp: 0.5, mul: 1.0, add: 0.0);
 			snd = MoogFF.ar(snd, SinOsc.kr(0.08, 0.5, cutoff/10, cutoff), 3, 0);
 			snd = DelayC.ar(snd, 1.5, 1,0.8);
-			//snd = snd * EnvGen.ar(Env.linen(0.001, 0.01,0.01,1), doneAction:2);
 			Out.ar(out, [snd, AllpassC.ar(snd, 0.5, 0.05, 0.3)]*amp);
 		}).add;
 
@@ -268,9 +256,6 @@ SynthDef("marimba", {arg freq = 440, amp = 0.4, pan = 0;
 		SynthDef(\sunsetPad, {
 			|out = 0, f1 = 200, f2 =  300, cutoff = 1200, amp = 0.7|
 			var snd;
-			//f1 = f1 + SinOsc.kr(0.1, 0, 1, 20);
-			//f2 = f2 + SinOsc.kr(0.1, 0, 1, 30);
-			//f3 = f3 + SinOsc.kr(0.1, 0, 1, 10);
 		snd = (1+0.15*SinOsc.kr(5/60))*Saw.ar([f1,f2])+ (1+0.5*SinOsc.kr(10/60))*Pulse.ar([f1,f2]);
 			snd = snd + VarSaw.ar(0.99*[f1,f2],0, LFTri.kr(0.3).range(0.25,0.9))*0.1;
 			snd = Mix(snd);
@@ -279,7 +264,6 @@ SynthDef("marimba", {arg freq = 440, amp = 0.4, pan = 0;
 		    snd = FreeVerb.ar(snd ,mix: 0.33, room: 0.5, damp: 0.5, mul: 1.0, add: 0.0);
 			snd = MoogFF.ar(snd, SinOsc.kr(0.08, 0.5, cutoff/10, cutoff), 3, 0);
 			snd = DelayC.ar(snd, 1.5, 1,0.8);
-			//snd = snd * EnvGen.ar(Env.linen(0.001, 0.01,0.01,1), doneAction:2);
 			Out.ar(out, [snd, AllpassC.ar(snd, 0.5, 0.05, 0.3)]*amp);
 		}).add;
 // -----------------------------------------------------------------------------------------------------
@@ -756,9 +740,6 @@ OSCdef('back1',
 		~strings.pause;
 		~mel.pause;
 		~counterpoint.pause;
-		postln(~freqz);
-		//freq=msg[1];
-		//~instr.set(\freq,freq, \amp,amp, \cutoff, cutoff, \vibr, vibr);
 
 	},
 	"/Background/Plate",);
@@ -796,9 +777,8 @@ OSCdef('back2',
 		~counterpoint.pause;
 
 		~strings.pause;
-		msg.postln;
-		//freq=msg[1];
-		//~instr.set(\freq,freq, \amp,amp, \cutoff, cutoff, \vibr, vibr);
+
+
 	},
 	"/Background/Water",);
 
