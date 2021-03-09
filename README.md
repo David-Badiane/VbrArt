@@ -10,7 +10,7 @@ The user can explore and enjot each world proposed.
 ## General structure
 As said before, the user can choose between four different worlds, each of which represent an acoustic feature. 
 Processing, Supercollider and Python frameworks are used to develop this project, they can be thought as blocks performing given tasks that commuincate one another using OSC protocol.
-<p align ="center" > <img width ="450" height ="280" src = "/readme_images/blockDiagram.PNG"> </p>
+<p align ="center" > <img width ="600" height ="280" src = "/readme_images/blockDiagram.PNG"> </p>
 The graphic part and the user interaction (Leap Motion, Arduino 1, mouse) is managed by Processing, you can find any part of the code related to graphics in the folder 'Processing'. 
 Supercollider handles the music framework of the entire project, you can find it in MusicFrameworkVibrart.scd.
 In the last world proposed, Sunset, also Python is used in order to develop Markov chain able to generate chords sequences accordingly to a given harmony, introducing more intelligence in the musical side of the project, giving it a more natural footprint.
