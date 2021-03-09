@@ -20,7 +20,7 @@ The four scenerios consist of four different backgrounds.
 In every background a physic representation of acoustic is depicted: 
 * the 1st background simulates the Chladni patterns formation process  on a rectangular plate  - **vibratingPlate**; 
 * the 2nd background consists of the simulation of a water drop - **vibratingWater**;
-* the 3rd background represents a five strings acoust**instrument - **vibratingStrings**;
+* the 3rd background represents a five strings acoustic instrument - **vibratingStrings**;
 * the 4th background depicts a sunset and relates its elements to the spectrum of a sound, creating a deeper, thoughtful environment - **vibratingSunset**.
 The user can play with one background at a time, giving vent to his creativity.
 Interaction happens through Leap Motion tracking or MousePositions tracking.
