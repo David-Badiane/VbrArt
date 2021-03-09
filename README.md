@@ -27,14 +27,14 @@ Interaction happens through Leap Motion tracking or MousePositions tracking.
 
 ## General Controls
 **Switching between backgrounds** :
-1. Arduino Uno buttons;
-2. Up and Down arrows of the keyboard;
+* Arduino Uno buttons;
+* Up and Down arrows of the keyboard;
 **Pointer position**:
-1. Leap Motion;
-2. Mouse;
+* Leap Motion;
+* Mouse;
 **Pointer activation**:
-1. Leap Motion - distance from Leap Motion less than a given threshold;
-2. Mouse - mouse clicked;
+* Leap Motion - distance from Leap Motion less than a given threshold;
+* Mouse - mouse clicked;
 
 ## Background related Controls:
 * vibratingPlate:
