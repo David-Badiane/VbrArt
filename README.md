@@ -90,5 +90,5 @@ The final implementation should look like this:
 ## Booting the Project
 
 
-Any further information can be found in the 'Presentation' power point.
+Any further information can be found in the 'Presentation' pdf.
 Enjoy your play!
