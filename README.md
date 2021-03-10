@@ -31,6 +31,7 @@ In every background a physic representation of acoustic is depicted:
  <p align ="center" > <img width ="250" height ="130" src = "/readme_images/vibratingSunset.png"> </p>
  
 The user can play with one background at a time, giving vent to his creativity.
+
 Interaction happens through Leap Motion tracking or MousePositions tracking.
 
 ## General Controls
