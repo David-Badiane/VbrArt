@@ -10,10 +10,10 @@ VbrArt is an interactive artistic installation created by David Badiane, Marco D
 The user can choose between four different worlds, each of which represent an acoustic feature. 
 Processing, Supercollider and Python frameworks are used to develop this project, they can be thought as blocks performing given tasks that commuincate one another using OSC protocol.
 <p align ="center" > <img width ="600" height ="280" src = "/readme_images/blockDiagram.PNG"> </p>
-The graphic part and the user interaction (Leap Motion, Arduino Uno, mouse) are managed by <u>Processing<u>, you can find any part of the code related to graphics in the folder 'Processing'. 
+The graphic part and the user interaction (Leap Motion, Arduino Uno, mouse) are managed by <u>Processing<u>; you can find any part of the code related to graphics in the folder 'Processing'. 
 <u>Supercollider<u> handles the music framework of the entire project, you can find it in MusicFrameworkVibrart.scd .
 In the last world proposed, Sunset, also <u>Python<u> is used to develop a Markov chain able to generate chord sequences accordingly to a given harmony. 
-The Python code introduces more intelligence in the musical side of the project, giving it a more natural footprint, you can find the main program main.py and the Data folder in the Python folder.
+The Python code introduces more intelligence in the musical side of the project, giving it a more natural footprint; you can find the main program main.py and the Data folder in the Python folder.
 
 ## Inside the scene
 The four scenerios consist of four different backgrounds. 
