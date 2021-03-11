@@ -1,10 +1,4 @@
-Sections:
-
- **1)VbrArt      
- 2)VbrArt - Controls         
- 3)VbrArt - Setup and Booting**
-
-# 1)VbrArt
+# VbrArt
 
 <p align ="center" > <img width ="450" height ="280" src = "/readme_images/first.png"> </p>
 
@@ -78,7 +72,7 @@ This scene is more like a picture that wants to make the user think and enjoy a 
 
 Further informations can be found in the 'Presentation' pdf.
 
-# 2)Vbrart - Controls
+# VbrArt - Controls
 ## General 
 **Switching between backgrounds** :
 * Arduino Uno buttons;
@@ -116,7 +110,7 @@ Further informations can be found in the 'Presentation' pdf.
 2. Mouse: when the mouse left button is pressed - **changeMode**;
 3. Keyboard: when left arrow of the keyboard is pressed - **scrumble**;
 
-# 3)VBrart - Setup and booting
+# VbrArt - Setup and booting
 
 ## Arduino Uno setup
 **What is needed for the complete setup?**
