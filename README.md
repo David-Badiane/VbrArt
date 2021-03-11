@@ -1,4 +1,7 @@
-# VbrArt
+Sections:
+ **1)VbrArt      2)VbrArt - Controls         3)VbrArt - Setup and Booting
+
+# 1)VbrArt
 
 <p align ="center" > <img width ="450" height ="280" src = "/readme_images/first.png"> </p>
 
@@ -70,7 +73,10 @@ This scene is more like a picture that wants to make the user think and enjoy a 
 * The musical background is here more complicated, we have two melodies and chords;
 * Both melodies and chords follow a reference mode, accordingly to the sun's rules of life; 
 
-## General Controls
+Further informations can be found in the 'Presentation' pdf.
+
+# 2)Vbrart - Controls
+## General 
 **Switching between backgrounds** :
 * Arduino Uno buttons;
 * Up and Down arrows of the keyboard;
@@ -83,16 +89,16 @@ This scene is more like a picture that wants to make the user think and enjoy a 
 * Leap Motion - distance from Leap Motion less than a given threshold;
 * Mouse - mouse clicked;
  
-## Background related Controls:
-**vibratingPlate**:
+## Background related 
+**- vibratingPlate**
 1. Arduino Uno - the potentiometer value regulates the frequency of the simulation;
 2. the frequency of the simulation can be also variated by pressing the mouse;
 
-**vibratingWater**:
+**- vibratingWater**
 1. the Leap Motion cursor, when activated, excitates the water;
 2. when the mouse is pressed at a given position, it provides a stimulus; 
 
-**vibratingStrings**:
+**- vibratingStrings**
 1. Leap Motion cursor:
   * when activated around a string, it plucks it; 
   * it releases the string when deactivated;
@@ -100,12 +106,14 @@ This scene is more like a picture that wants to make the user think and enjoy a 
   * when the mouse left button is pressed near the string, it plucks; 
   * it releases the string when the mouse left button is released;
 
-**vibratingSunset**:
+**- vibratingSunset**
 1. Leap Motion cursor:
   * when activated inside the sun, it changes it's modality of the sun's burning and the reference mode for music (**changeMode**); 
   * when deactivated inside the sun, it changes the color map colors and refills the sun matrix (**scrumble**);
 2. Mouse: when the mouse left button is pressed - **changeMode**;
 3. Keyboard: when left arrow of the keyboard is pressed - **scrumble**;
+
+# 3)VBrart - Setup and booting
 
 ## Arduino Uno setup
 **What is needed for the complete setup?**
@@ -123,7 +131,20 @@ With those elements it's possible to build the circuit depicted below:
 The final implementation should look like this:
 <p align ="center" > <img width ="600" height ="280" src = "/readme_images/arduino_real.jpg"> </p>
 
-## Booting the Project
+## Leap Motion setup
+Simply connect Leap Motion to the pc. 
+If you use the standalone application, all libraries are already included. 
+If you run it on processing be sure to install Leap Motion for Processing.
 
-Further informations can be found in the 'Presentation' pdf.
-Enjoy your play!
+## Boot the project
+1. Open on Supercollider **MusicFrameworkVibrart.scd**, boot the server and run the code;
+2. Wait until Supercollider has compiled;
+3. Run Python script **main.py**, let it run indefinitely;
+4. Run Processing code or open the standalone application;
+5. Check if OSC messages are correctly functioning from Supercollider post window;
+
+If step 5 is valid, then everything is correctly set for VBrart.
+Enjoy your play! 
+
+
+
