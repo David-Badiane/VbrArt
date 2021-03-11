@@ -145,9 +145,9 @@ If you run it on processing be sure to install Leap Motion for Processing.
 2. Wait until Supercollider has compiled;
 3. Run Python script **main.py**, let it run indefinitely;
 4. Run Processing code or open the standalone application;
-5. Check if OSC messages are correctly functioning from Supercollider post window;
+5. Check if OSC messages are correctly functioning from Supercollider post window.
 
-If step 5 is valid, then everything is correctly set for VBrart.
+If step 5 is valid, then everything is correctly set for VBrart. If not check the IP port and IP addresses.
 Enjoy your play! 
 
 
