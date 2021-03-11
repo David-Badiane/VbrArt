@@ -2,6 +2,13 @@
 
 <p align ="center" > <img width ="450" height ="280" src = "/readme_images/first.png"> </p>
 
+<p align ="center" > youtube demonstrative video </p>
+<div align="center">
+   <a href="https://www.youtube.com/embed/RJ15d6W5Er4" target="_blank"><img src="http://img.youtube.com/vi/RJ15d6W5Er4/0.jpg" 
+                                                                            alt="youtube video" width="240" height="180" border="10" ></img>
+   </a>
+</div>
+
 ## Introduction
 
 VbrArt is an interactive artistic installation created by David Badiane, Marco Donzelli and Miriam Papagno. It brings together four different worlds all linked to the ondulatory world of acoustics. The aim of this installation is to enhance the curiosity related to Music and its 'physicality' everywhere around us. 
