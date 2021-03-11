@@ -1,31 +1,3 @@
-:::::: {.cols data-latex=""}
-
-::: {.col data-latex="{0.55\textwidth}"}
-```{r, echo=FALSE, fig.width=5, fig.height=4}
-par(mar = c(4, 4, .2, .1))
-plot(cars, pch = 19)
-```
-:::
-
-::: {.col data-latex="{0.05\textwidth}"}
-\ 
-<!-- an empty Div (with a white space), serving as
-a column separator -->
-:::
-
-::: {.col data-latex="{0.4\textwidth}"}
-The figure on the left-hand side shows the `cars` data.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-enim ad minim veniam, quis nostrud exercitation ullamco laboris
-nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-nulla pariatur.
-:::
-::::::
-
-
 # VbrArt
 
 <p align ="center" > <img width ="450" height ="280" src = "/readme_images/first.png"> </p>
@@ -45,6 +17,7 @@ The Python code introduces more intelligence in the musical side of the project,
 
 ## Inside the scene
 The four scenerios consist of four different backgrounds. 
+The design is strictly exploratory, the scenes are designed so that the user becomes curious about them and starts playing with them, leaving a mark into the scene and evolving the artwork in an individual way.
 In every background a physic representation of acoustic is depicted: 
 * the 1st background simulates the Chladni patterns formation process  on a rectangular plate  - **vibratingPlate**; 
  <p align ="right" > <img width ="270" height ="160" src = "/readme_images/vibratingPlate.png"> </p>
@@ -59,8 +32,43 @@ In every background a physic representation of acoustic is depicted:
  <p align ="right" > <img width ="270" height ="160" src = "/readme_images/vibratingSunset.png"> </p>
  
 The user can play with one background at a time, giving vent to his creativity.
-
 Interaction happens through Leap Motion tracking or MousePositions tracking.
+
+### vibratingPlate
+The simulation of chladni patterns is reality based:
+* Particles system where eigenmodes configurations are based on toxiclibs attractors and repulsors;
+* The user controls the frequency of the sinusoidal signal that stimulates vibrations in the virtual plate;
+* The attractive/repulsive forces are inversey proportional to the distance of the control frequency from the plate resonance frequencies;
+* The eigenmode configuration is selected based on the distance of the control frequency from the plate resonance frequencies;
+* If the distance of the control frequency from the plate resonance frequencies is major than a given threshold, based on the distance between subsequent modes, the particles will move randomly;
+
+### vibratingWater
+The simulation of water spherical wave propagation is based on:
+* A matrix that represents our domain;
+* The finite difference equation that governs spherical waves propagation;
+* The application of point loads (stimulus);
+* A color gradient of watery colors;
+* Damping modeling - in order to recreate water texture we set the damping of the wave propagation to be way less if the energy in the given cell is less than a given threshold, this will make the wave fade away more slowly and create a watery texture;
+* The musical background, which is in turn based on granular synthesis;
+* The correspondance between application of the stimulus and a sound signal from an scl Synth;
+
+### vibratingStrings
+The simulation of string vibration is more musical, its characteristics are:
+* Strings simulated by the connection of verletSprings characterised by high tension at the extrema;
+* String plucking mechanism simulation;
+* Particles generation when the string is plucked;
+* Musical background based on an autogenerative melody in Lydian scale;
+* String plucking triggers a tuned string sound, the tonality of the melodic line is changed accordingly to the particular string note; 
+ 
+### vibratingSunset
+This scene is more like a picture that wants to make the user think and enjoy a digital dynamic painting characterised by:
+* The sun - a 2D cycle Cellular Automata (CA) based on five rules of life, set on a fire-like color gradient;
+* The sun CA is based on a matrix, rules of life, matrix initial fillage and the color gradient can be variated;
+* The sea - a dynamic rectangle based on a color gradient where FFTLines grow;
+* FFTLines - lines that depict the sound spectrum at the given instant simulating waves (inspired by Unknown Pleasures - Joy Division);
+* The stars - sky objects that sparkle when certain Bins of the sound spectrum are filled;
+* The musical background is here more complicated, we have two melodies and chords;
+* Both melodies and chords follow a reference mode, accordingly to the sun's rules of life; 
 
 ## General Controls
 **Switching between backgrounds** :
@@ -117,6 +125,5 @@ The final implementation should look like this:
 
 ## Booting the Project
 
-
-Any further information can be found in the 'Presentation' pdf.
+Further informations can be found in the 'Presentation' pdf.
 Enjoy your play!
