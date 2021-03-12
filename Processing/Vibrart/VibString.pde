@@ -11,7 +11,6 @@ class VibString {
   ArrayList <Particle> particleAnimation;
   int STRING_RES=50;  // number of nodes for string
   int colVar = 28;
-  boolean doOnce = false;
   
   // contructor - its complexity is in the function initPhysics()
   VibString() {
@@ -64,15 +63,11 @@ class VibString {
       s.display(wdt);
       // if mousePressed and there is a selected particle, send message, just once per plucking
       if(mousePressed){ 
-        if(!doOnce){
           if (s.selectedParticle!=null) {
             s.selectedParticle.set(mouseX,mouseY);
             send(abs(i-4));
-          }
-        doOnce = true;
         }
       }
-      else {doOnce = false;}
       wdt -= 0.3; 
     }
     react();
