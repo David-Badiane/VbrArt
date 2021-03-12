@@ -131,7 +131,7 @@ Further informations can be found in the 'Presentation' pdf.
 * The Arduino sketch that you can find in the repository;
 
 With those elements it's possible to build the circuit depicted below:
-<p align ="center" > <img width ="400" height ="280" src = "/readme_images/arduino_schematic.png"> </p>
+<p align ="center" > <img width ="500" height ="280" src = "/readme_images/arduino_schematic.png"> </p>
 
 The final implementation should look like this:
 <p align ="center" > <img width ="600" height ="280" src = "/readme_images/arduino_real.jpg"> </p>
