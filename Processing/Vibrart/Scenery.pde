@@ -1,5 +1,7 @@
+// High level class handling the switching and the control of the four vibrating elements
+
 class Scenery{
-// MEMBERS
+// Members
 int BUTTONSTATE;
 boolean doOnce = false;
 boolean doOnceLeap = false;
@@ -16,7 +18,7 @@ vibratingPlate = new Plate();
 vibratingWater = new WaterDrops();
 vibratingStrings = new VibString();
 vibratingSunset = new Sunset();
-vibratingWater.die();                 // die() functions deallocate all the possible objects from each VE
+vibratingWater.die();                 // die() functions deallocate all the possible objects from each VibratingElement
 vibratingStrings.die();
 vibratingSunset.die();
 }
@@ -38,10 +40,8 @@ void buttonPressed(int value){
 }
 
 void update(){
-  updateAndDisplayLeap();    // here we take care of Leap Motion
-  
-  switch(BUTTONSTATE){       // in ths switch we update each VE (Vibrating Element) 
-  
+  updateAndDisplayLeap();    // here we take care of Leap Motion  
+  switch(BUTTONSTATE){       // in the switch we update each VE (Vibrating Element) 
     // ------------------------- vibratingPlate 
     case 0 :
       plateUpdate();
@@ -64,11 +64,11 @@ void update(){
     }
   }
   
+  // Handles Leap Motion control
   void sceneryCtrl(PVector pos, boolean state){
     switch(BUTTONSTATE){
-      case 0:
+      case 0: // no leap motion control
       break;
-      
       // ----------------------------------------------------------------------- VIBRATING-WATER
       
       case 1:
@@ -88,14 +88,11 @@ void update(){
             vibratingWater.send(0, pos.x, pos.y);
             doOnce = true;
             }
-          }
-           
+          }  
         }
-  
       break;
       
       // ----------------------------------------------------------------------- VIBRATING-STRINGS
-      
       case 2:
       for (int i = vibratingStrings.strings.size()-1; i>=0; i--){ // ----------- cycle along the trings of the VE
         Strings s = vibratingStrings.strings.get(i);
@@ -119,7 +116,7 @@ void update(){
         }
       }   
       break;
-      // SUNSET
+      // ---------------------------------------------------------------------------VIBRATING-SUNSET
       case 3:
         Vec2D loc = new Vec2D(pos.x,pos.y);
           if(loc.isInCircle(vibratingSunset.suns.get(0).center, vibratingSunset.suns.get(0).radius*0.992) == true){

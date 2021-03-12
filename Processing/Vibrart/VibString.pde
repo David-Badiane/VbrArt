@@ -1,19 +1,27 @@
-import processing.opengl.*; //<>//
+// One of the complex classes representing a vibrating element - five strings instrument simulation //<>//
+
+import processing.opengl.*;
 import toxi.physics2d.*;
 import toxi.geom.*;
 import java.util.List;
 
 class VibString {
+  // members
   ArrayList<Strings> strings;
   ArrayList <Particle> particleAnimation;
   int STRING_RES=50;  // number of nodes for string
   int colVar = 28;
+  boolean doOnce = false;
+  
+  // contructor - its complexity is in the function initPhysics()
   VibString() {
     this.strings = new ArrayList<Strings>();
     this.particleAnimation =  new ArrayList<Particle>();
     initPhysics();
   }
-
+  
+  // called in the constructor and in create()
+  // builds our string instrument correctly setting initial and ending positions of each string
   void initPhysics() {
     // remove Behaviors
     int nBehaviors = physics.behaviors.size();
@@ -39,9 +47,10 @@ class VibString {
       count += 1;
     }
   }
-
+  
+  // update
   void update() {
-    // wooden background
+    // wooden dynamic background
     background(94, 75, 52);
     stroke(colVar%52, colVar%42, colVar%29, (colVar+100)%256);
     for (int i = 0; i< width/5+height; i++) {
@@ -53,27 +62,31 @@ class VibString {
     for (int i =strings.size()-1; i >= 0; i--){
       Strings s = strings.get(i);
       s.display(wdt);
-      
-      if(mousePressed) { 
-        if (s.selectedParticle!=null) {
-          s.selectedParticle.set(mouseX,mouseY);
-          send(abs(i-4));
+      // if mousePressed and there is a selected particle, send message, just once per plucking
+      if(mousePressed){ 
+        if(!doOnce){
+          if (s.selectedParticle!=null) {
+            s.selectedParticle.set(mouseX,mouseY);
+            send(abs(i-4));
+          }
+        doOnce = true;
         }
       }
-      wdt -= 0.3;
-     
+      else {doOnce = false;}
+      wdt -= 0.3; 
     }
     react();
-    colVar +=1;
+    colVar +=1;  // update color variable
   }
   
-   void react() {
-     for ( int stringInd = 0; stringInd< strings.size(); stringInd++){
+  // react to the plucking with particles generation
+  void react() {
+    for ( int stringInd = 0; stringInd< strings.size(); stringInd++){
        Strings s = strings.get(stringInd);
        float theta = 0 ;
        for ( int i = 5; i < s.nodes.size()-5; i++){
          Particle p1 = s.nodes.get(i);
-         if (p1.getVelocity().magnitude() > 70 ){
+         if (p1.getVelocity().magnitude() > 70 ){                               // threshold for particles generation
            Particle pAnimation = new Particle(p1.getPreviousPosition(),-0.05);
            particleAnimation.add(pAnimation);
            pAnimation.addForce(p1.getVelocity().getRotated(theta).scale(0.07));
@@ -81,7 +94,7 @@ class VibString {
        theta = theta + 15;
        }
      }
-   
+   // consume Particles
      for (int i = particleAnimation.size()-1; i>=0; i-- ){
        Particle pAnimation = particleAnimation.get(i);
        pAnimation.displayColor(color(205, 164, 52));
@@ -89,8 +102,7 @@ class VibString {
          pAnimation.fastConsume();
        }
      }
-   
-
+  // remove most of the elements in order to save memory
   void die() {
     int nBehaviors = physics.behaviors.size();
     for (int i =nBehaviors-1; i>=0; i--) {
@@ -107,7 +119,7 @@ class VibString {
       strings.remove(s);
     }
   }
-
+  // recreate most of the elements
   void create() {
     int nBehaviors = physics.behaviors.size();
     for (int i =nBehaviors-1; i>=0; i--) {
@@ -134,11 +146,13 @@ class VibString {
     initMusic();
   }
   
+  // send OSC control message
   void send(int pluckedString){
   Object [] args = {pluckedString*5};
   OSCsendMessage("/Control/StringPlucked", args);
   }
   
+  // send OSC init background message
   void initMusic(){
   Object [] args = {};
   OSCsendMessage("/Background/Strings", args);

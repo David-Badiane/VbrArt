@@ -1,3 +1,5 @@
+// MAIN PROGRAM OF THE PROJECT
+
 import toxi.geom.*;
 import toxi.physics2d.*;
 import oscP5.*;
@@ -85,6 +87,7 @@ void setup(){
 }
 
 void draw(){
+  // ----------------------------------- INTRO ------------------------------------------------
   if(!doOnce){
     Object [] args = {};
     OSCsendMessage("/Background/Init", args);
@@ -113,6 +116,8 @@ void draw(){
         scenario.buttonPressed(scene);
       }
     }
+    
+    // ----------------------------------- DRAW UPDATE --------------------------------------------
     if(scene > 3){
       scenario.buttonPressed(0); 
       scene =0;
@@ -121,17 +126,17 @@ void draw(){
     scenario.update();
     // update Leap Motion
     updateAndDisplayLeap(); 
+    // update Mouse
     updateAndDisplayMouse();
   }
 }
 
-// KeyBoard controls - CHANGE SCENARIO WITH THE UP/DOWN ARROWS KEYS
 void keyPressed(){
+  // KeyBoard controls - CHANGE SCENARIO WITH THE UP/DOWN ARROWS KEYS
   if(keyCode == UP){
     int value = (scenario.BUTTONSTATE +1)%4;
     scenario.buttonPressed(value);
   }
-  
   if(keyCode == DOWN){
     if(scenario.BUTTONSTATE!=0){
       int value = (scenario.BUTTONSTATE -1)%4;
@@ -140,33 +145,39 @@ void keyPressed(){
     else scenario.buttonPressed(3);
   }
   
-  if(keyCode == LEFT){
-      if ( scenario.BUTTONSTATE == 3 ){
-        scenario.vibratingSunset.suns.get(0).mapwidth = ( scenario.vibratingSunset.suns.get(0).mapwidth+1)%100;
-        scenario.vibratingSunset.suns.get(0).scrumble((int) random( scenario.vibratingSunset.suns.get(0).mapwidth/2));
+  // change sun fillage with left arrow
+  if ( scenario.BUTTONSTATE == 3 ){
+        if(keyCode == LEFT){
+           scenario.vibratingSunset.refillAndChangeColors();
       }
     }
 }
 
 // Mouse handling for various Scenarios
-
-
 void mousePressed() {
+  // set string plucking
   if ( scenario.BUTTONSTATE == 2){
     ArrayList<Strings> strings = scenario.vibratingStrings.strings;
     for (Strings s : strings){
       s.pluck(new Vec2D (mouseX, mouseY));
     }
   }
+  // set sun mode change and sun fillage change
   if(scenario.BUTTONSTATE == 3){
-    CA sun = scenario.vibratingSunset.suns.get(0);
-    scenario.vibratingSunset.suns.get(0).mode = (sun.mode+1)%5;
-    scenario.vibratingSunset.nextMode();
-    scenario.vibratingSunset.send();
+    if(mouseButton == LEFT){
+      CA sun = scenario.vibratingSunset.suns.get(0);
+      scenario.vibratingSunset.suns.get(0).mode = (sun.mode+1)%5;
+      scenario.vibratingSunset.nextMode();
+      scenario.vibratingSunset.send();
+      }
+    if(mouseButton == RIGHT){
+        scenario.vibratingSunset.refillAndChangeColors();
+      }
     }
 }
 
 void mouseDragged() {
+  // set the position of the plucked string particle to mouse position
   if ( scenario.BUTTONSTATE == 2){
     ArrayList<Strings> strings = scenario.vibratingStrings.strings;
     for (Strings s : strings){
@@ -176,6 +187,7 @@ void mouseDragged() {
       }
     }
   } 
+  // set mouse dragging continuous stimulus to water
   else if ( scenario.BUTTONSTATE == 1){
      float c3 = 500;
      if( mouseX > 0 && mouseX <width && mouseY > 0 && mouseY < height) 
@@ -184,6 +196,7 @@ void mouseDragged() {
 }
 
 void mouseReleased() {
+  // unlock the plucked particle if mouse is released
   if ( scenario.BUTTONSTATE == 2){
     ArrayList<Strings> strings = scenario.vibratingStrings.strings;
     for (Strings s : strings){
@@ -195,28 +208,6 @@ void mouseReleased() {
   }
 }
 
-// OSC functions    -   will be called not in the main
-void OSCsendMessage(String address, Object [] args ){
-  OscMessage msg = new OscMessage(address); 
-  msg.setArguments(args);
-  oscP5.send(msg, ip_port);
-  //msg.print();
-}
-
-void oscEvent(OscMessage msg) {
-  if (msg.checkAddrPattern("/fftArray")) {
-    for (int i= 0; i<nBin; i++) {
-      spec[i]= msg.get(i).floatValue();
-    }
-  }
-}
-
-void pyOSCsendMessage(String address, Object [] args ){
-  OscMessage msg = new OscMessage(address); 
-  msg.setArguments(args);
-  oscP5.send(msg, pyPort);
-  msg.print();
-}
 
 // Leap Motion handling function
 void updateAndDisplayLeap(){
@@ -238,27 +229,56 @@ void updateAndDisplayLeap(){
       }
     }
   }
-  
+// check if LM is connected  
 void leapOnConnect() {
   leapConnected = true;
 }
-
-  void updateAndDisplayMouse(){
-   if(scenario.BUTTONSTATE!=0){
-      //boolean state;
-      PVector loc = new PVector(mouseX, mouseY);
-        if(mousePressed && loc.x >10 && loc.x< width-10 && loc.y >10 && loc.y < height-10){
-          fill(0,255,0,100);
-          //state = true; 
-        }
-        else{
-          fill(255,0,0,100);
-          //state = false;
-        }
-        ellipse(loc.x, loc.y, 5,5);
+// mouse handling function
+void updateAndDisplayMouse(){
+ if(scenario.BUTTONSTATE!=0){
+    //boolean state;
+    PVector loc = new PVector(mouseX, mouseY);
+      if(mousePressed && loc.x >10 && loc.x< width-10 && loc.y >10 && loc.y < height-10){
+        fill(0,255,0,100);
+        //state = true; 
       }
-     else{
-       textFont(font2);
-       text(str(scenario.vibratingPlate.freq), 12*width/13,height/13);
-       }
+      else{
+        fill(255,0,0,100);
+        //state = false;
+      }
+      ellipse(loc.x, loc.y, 5,5);
+      if(scenario.BUTTONSTATE == 3){
+        fill(255,255,255,100);
+        textFont(font2);
+        text(scenario.vibratingSunset.modesNames[scenario.vibratingSunset.modSelect], 14*width/15,height/20);
+      }
     }
+   else{
+     textFont(font2);
+     text(str(scenario.vibratingPlate.freq), 12*width/13,height/13);
+     }
+  }
+
+// OSC functions    
+// Sender - will be not called in the main, mostly called in each vibrating object send function
+void OSCsendMessage(String address, Object [] args ){
+  OscMessage msg = new OscMessage(address); 
+  msg.setArguments(args);
+  oscP5.send(msg, ip_port);
+  //msg.print();
+}
+// Receiver - FFT
+void oscEvent(OscMessage msg) {
+  if (msg.checkAddrPattern("/fftArray")) {
+    for (int i= 0; i<nBin; i++) {
+      spec[i]= msg.get(i).floatValue();
+    }
+  }
+}
+// Sender to Python
+void pyOSCsendMessage(String address, Object [] args ){
+  OscMessage msg = new OscMessage(address); 
+  msg.setArguments(args);
+  oscP5.send(msg, pyPort);
+  msg.print();
+}

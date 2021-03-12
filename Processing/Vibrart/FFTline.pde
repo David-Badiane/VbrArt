@@ -1,14 +1,15 @@
-//import ddf.minim.*;
-//import ddf.minim.analysis.*;
-//import processing.sound.*;
+// FFTlines are piecewise linear functions interpolating fft values
+// they re used also to implement the stars with displayPolygon
 
 class FFTline{
-  Vec2D ref;
-  int maxH;
-  float dx;
-  float [] fftVals = new float[nBin];
-  float nDisplayed = 100;
+  // Members
+  Vec2D ref; // reference position of the piecewise linear line
+  int maxH;  // maxHeight
+  float dx;  // x distance between extrema of a single line
+  float [] fftVals = new float[nBin]; // fft values
+  float nDisplayed = 100;             // number of FFtvalues displayed
   
+  // constructors
   FFTline(float [] spectrum){
     arrayCopy(spectrum, fftVals);
     //this.fftVals = spectrum;
@@ -23,6 +24,7 @@ class FFTline{
     dx = width/(nDisplayed);
   }
   
+  // display for actual fftline
   void display(){
     fill(30,30,132,100);
     stroke(255,255,255,70);
@@ -34,7 +36,7 @@ class FFTline{
     }
     endShape();
   }
-  
+  // display for skyobject
   void displayPolygon(){
     fill(30,30,132,50);
     stroke(255,255,255,70);
@@ -42,15 +44,13 @@ class FFTline{
     beginShape();
     float angle = 0;
     for (int i = 0; i<nDisplayed+1;i++){
-     
-      vertex(ref.x +cos(angle)*fftVals[i%20], ref.y - sin(angle)*log(i+10)*fftVals[i%20]);
-      
+      vertex(ref.x +cos(angle)*fftVals[i], ref.y - sin(angle)*log(i+10)*fftVals[i%20]);
       angle += TWO_PI / nDisplayed;
     }
     endShape();
   }
   
-  void update(){
+  void update(){ // make lines drift in the sea
     ref.y -= 3; 
   }
   

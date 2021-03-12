@@ -1,6 +1,7 @@
+// Arduino class handles arduino uno
+
 import processing.serial.*;
 
-// Class
 class Arduino {
 
   // Serial connection
@@ -16,12 +17,12 @@ class Arduino {
     serialPort = i;
      myPort= new Serial(Parent,Serial.list()[serialPort],baudrate);
     }
-  }
-    
+  }  
   //println(Serial.list()[serialPort]);
-  //  // Open Serial line
+  // Open Serial line
   }
   
+  //  function retrieving values of buttons and potentiometers
   int[] retrieve() {
     while (myPort.available() > 0) {
     String val = myPort.readStringUntil('\n');
@@ -41,10 +42,9 @@ class Arduino {
   return sensors;
   }
   
+  // check if Arduino is present and connected
   boolean isConnected(){    
     if(Serial.list()[serialPort].equals("/dev/cu.usbmodem14201")){return true;} 
     else{return false;}
   }
-  
-  
 }

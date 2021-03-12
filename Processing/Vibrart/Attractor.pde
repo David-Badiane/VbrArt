@@ -1,10 +1,13 @@
-class Attractor extends VerletParticle2D {
+// class extended from toxiclibs attractors, attracts/repels particles
 
-  float r;
+class Attractor extends VerletParticle2D {
+  // Members
+  float r;  // radius
   AttractionBehavior2D behavior;
   float force;
   float field;
-
+  
+  // Constructors
   Attractor (Vec2D loc) {
     super (loc);
     r = 24;
@@ -21,17 +24,17 @@ class Attractor extends VerletParticle2D {
     //physics.addParticle(this);
     physics.addBehavior(new AttractionBehavior2D(this,span,force));
   }
-
+  // see the attractor - for debug in this case
   void display (color c, float r) {
     fill(c);
     this.r = r;
     ellipse (x, y, r, r);
   }
-  
- void destroy (){
+  // get rid of the given attractor
+  void destroy (){
    int nBehaviors = physics.behaviors.size();
    for (int i =0; i< nBehaviors; i++){
-   physics.behaviors.remove(physics.behaviors.get(0));
+     physics.behaviors.remove(physics.behaviors.get(0));
    }
   }
 

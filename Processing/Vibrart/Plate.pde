@@ -1,18 +1,21 @@
+// One of the complex classes representing a vibrating element - Chladni patterns on rectangular plate
+
 import toxi.geom.*;
 import toxi.physics2d.*;
 import toxi.physics2d.behaviors.*;
 
 class Plate{
-ArrayList<Particle> particles;
+// Members
+ArrayList<Particle> particles;          
 ArrayList <Attractor> attractors;
-ArrayList<Vec2D> startPos;    // each time it restarts we put same positions
+ArrayList<Vec2D> startPos;              // each time it restarts we put same last positions of the particles
 Rect rect; // world bounds
 Attractor a;
 float w = width;
 float h = height;
 int nAttr;
 int nParticles = 2000;
-int totalLife;
+// modes dict with attractors and repulsors positions
 float [][] modes = {
                   // idle state to compute intervals
                   {},
@@ -85,15 +88,18 @@ float [][] modes = {
                     0.26*w,  5*h/8, 0.74*w,  5*h/8,
                     0.26*w,  7*h/8, 0.74*w,  7*h/8}
                  };
-  int freq;
-  float [] eigenfreqz = {0, 100, 140, 179, 220, 310, 400, 440, 540};
-  int mode;
+  
+  int freq;     // control frequency
+  float [] eigenfreqz = {0, 100, 140, 179, 220, 310, 400, 440, 540};  // eigenfrequencies
+  int mode;     // eigenmode selection
   float [] field = {0,w/4, 120, 90, 110, 90, 70, 55};        // fields of attractors for each mode
   float [] scaleForce = {0,1, 0.8,0.8, 0.9, 0.7, 0.9,0.7};   // fine adjustment of resonance for each mode
-  float myInterval [] = new float[2];
-  float deviation [] = new float[9];
-  float band;
+  
+  float myInterval [] = new float[2];  // to control frequency intervals
+  float deviation [] = new float[9];   // deviation with eigenfrequencies
+  float band;                          // band where the control f is now
 
+  // constructor
   Plate(){
     physics.setDrag(0.6);
     physics.setWorldBounds(rect);
@@ -103,217 +109,156 @@ float [][] modes = {
       startPos.add(new Vec2D(random(width),random(height)));
       particles.add(new Particle(startPos.get(i)));
       Particle p = particles.get(i);
-      this.totalLife += p.life;
     } 
     attractors = new ArrayList <Attractor>(); 
     rect = new Rect(0,0,width,height);
     this.freq =100;
   }
   
-  
-boolean isBetween( float num, float a, float b){
-  if(num >=a && num <=b)  return true;
-  else                    return false;
-}
-
-void update () {
-  display();
-  for ( int i=0; i < eigenfreqz.length; i++){
-    deviation[i] = eigenfreqz[i] - freq; 
+  // used for checking where is control frequency
+  boolean isBetween( float num, float a, float b){
+    if(num >=a && num <=b)  return true;
+    else                    return false;
   }
   
-  for ( int i=1; i < eigenfreqz.length-1; i++){
-    if (deviation[i-1] <0 && deviation[i] >=0 ){
-      myInterval[0] = eigenfreqz[i-1];
-      myInterval[1] = eigenfreqz[i];
-      band = myInterval[1] - myInterval[0]; 
-      mode = i;
+  // the update is based on the control frequency distance from other eigenfrequencies
+  void update () {
+    display();
+    for ( int i=0; i < eigenfreqz.length; i++){
+      deviation[i] = eigenfreqz[i] - freq; 
     }
-  } 
-  float myDev[] = new float[2];
-  
-  if (isBetween(freq, myInterval[0], myInterval[1])){
-     myDev[0] = freq - myInterval[0];
-     myDev[1] = freq - myInterval[1];
-     
-     if(abs(myDev[0]) < abs(myDev[1]) && myDev[0]<2*band/5) {
-        mode = mode-1;
-        float res = 1/(abs(myDev[0])+ 0.1);
-        chladni(mode, field[mode], res*scaleForce[mode], res/30);
+    
+    for ( int i=1; i < eigenfreqz.length-1; i++){
+      if (deviation[i-1] <0 && deviation[i] >=0 ){
+        myInterval[0] = eigenfreqz[i-1];
+        myInterval[1] = eigenfreqz[i];
+        band = myInterval[1] - myInterval[0]; 
+        mode = i;
       }
-      else if(abs(myDev[0]) > abs(myDev[1]) && myDev[1]<2*band/5) {
-        float res = 1/(abs(myDev[1])+ 0.1);
-        chladni(mode, field[mode], res*scaleForce[mode], res/30);
+    } 
+    float myDev[] = new float[2];
+    
+    if (isBetween(freq, myInterval[0], myInterval[1])){
+       myDev[0] = freq - myInterval[0];
+       myDev[1] = freq - myInterval[1];
+       
+       if(abs(myDev[0]) < abs(myDev[1]) && myDev[0]<2*band/5) {
+          mode = mode-1;
+          float res = 1/(abs(myDev[0])+ 0.1);
+          chladni(mode, field[mode], res*scaleForce[mode], res/30);
+        }
+        else if(abs(myDev[0]) > abs(myDev[1]) && myDev[1]<2*band/7) {
+          float res = 1/(abs(myDev[1])+ 0.1);
+          chladni(mode, field[mode], res*scaleForce[mode], res/30);
+        }
+        else {scrumble(myDev[0] * 0.1, myDev[1]*0.1,2);}  
+    } //<>// //<>// //<>// //<>// //<>//
+  }
+  
+  // visual display
+  void display(){
+    background (0,0,0,150); 
+    physics.update ();
+    /*  // for cycle used for debug
+    for (Attractor a: attractors){
+    if (a.force<=0){
+      //a.display(color(155,155,0,200), field[mode]);
+    }
+    if (a.force>0){
+      //a.display(color(255,155,100,200), 50);
       }
-      else {scrumble(myDev[0] * 0.1, myDev[1]*0.1,2);}
+    }  */
     
+    for (Particle p: particles) {
+      p.infiniteConsume();
+      p.display();
+      Vec2D vel = p.getVelocity();
+      if(vel.magnitude() <= 1){
+        p.addVelocity(vel.jitter(1,1));
+      }
+    }  //<>//
   }
-  /*
-  switch(freq){
-  case 100:
-  nAttr = attractors.size();
-  if(nAttr>0){
-    
-    for (int i =0; i < nAttr; i++){
-    attractors.remove(0);}
-  }    
-  for (int i = 0; i < modes[0].length/2; i++){
-  attractors.add(new Attractor(new Vec2D( modes[0][2*i], modes[0][2*i+1]),w/3, -0.3));
-  }
-  for (int i = 0; i < modes[0].length/2; i++){
-  attractors.add(new Attractor(new Vec2D( modes[0][2*i], modes[0][2*i+1]),w/2, 0.1));
-  } 
- 
-  break;
   
-  case 110:
-  scrumble();
-  break;
-  
-  case 120:
-  chladni(1,120); //<>// //<>//
-  break;
-  
-  case 130:
-  scrumble();
-  break;
- 
-  case 140:
-  chladni(2,90); //<>// //<>//
-  break;
-  
-  case 150:
-  scrumble();
-  break;
-  
-  case 160:
-  chladni(3,110); //<>// //<>//
-  break;
-  
-  case 170:
-  scrumble();
-  break;
-  
-  case 180:
-  chladni(4,90);  //<>// //<>//
-  break;
-  
-  case 190:
-  scrumble();
-  break;
-  
-  case 200:
-  chladni(5,70); //<>// //<>//
-  break;
-  
-  case 210:
-  scrumble();
-  break;
-  
-  case 220:
-  chladni(6,55);
-  break;
-  }
-  */
-}
-
-
-void display(){
-  background (0,0,0,150); 
-  physics.update ();
-  for (Attractor a: attractors){
-  if (a.force<=0){
-    //a.display(color(155,155,0,200), field[mode]);
-  }
-  if (a.force>0){
-    //a.display(color(255,155,100,200), 50);
+  // chladni attraction / repulsion
+  void chladni(int mode, float field, float repForce, float attrForce){
+    physics.setDrag(0.6);
+    nAttr = attractors.size();
+    if(nAttr>0){
+      for (int i =0; i < nAttr; i++){
+        attractors.get(0).destroy();
+        attractors.remove(0);}
+    }  
+    for (int i = 0; i < modes[mode].length/2 ; i++){
+    attractors.add(new Attractor(new Vec2D( modes[mode][2*i], modes[mode][2*i+1]),field, -repForce));
     }
-  }  
-  for (Particle p: particles) {
-    p.infiniteConsume();
-    p.display();
-    Vec2D vel = p.getVelocity();
-    if(vel.magnitude() <= 1){
-      p.addVelocity(vel.jitter(1,1));
+    for (int i = 0; i < modes[mode].length/2; i++){
+    attractors.add(new Attractor(new Vec2D( modes[mode][2*i], modes[mode][2*i+1]),w/5, attrForce));
     }
-  } //<>// //<>//
-}
-
-
-void chladni(int mode, float field, float repForce, float attrForce){
-  physics.setDrag(0.6);
-  nAttr = attractors.size();
-  if(nAttr>0){
-    for (int i =0; i < nAttr; i++){
-      attractors.get(0).destroy();
-      attractors.remove(0);}
-  }  
-  for (int i = 0; i < modes[mode].length/2 ; i++){
-  attractors.add(new Attractor(new Vec2D( modes[mode][2*i], modes[mode][2*i+1]),field, -repForce));
-  }
-  for (int i = 0; i < modes[mode].length/2; i++){
-  attractors.add(new Attractor(new Vec2D( modes[mode][2*i], modes[mode][2*i+1]),w/5, attrForce));
-  }
-}
-
-
-void scrumble(float jitter, float force, float scaleVel) {
-  physics.setDrag(0.05);
-  nAttr = attractors.size();
-  if(nAttr>0){
-  attractors.get(0).destroy();
-  for (int i =0; i < nAttr; i++)
-  {attractors.remove(0);}}
-    
-  for (Particle p: particles) {
-    Vec2D vel = p.getVelocity();
-    if(vel.magnitude() <= 0.8){
-      p.addVelocity(vel.jitter(random(-jitter,jitter),random(-jitter,jitter)));
-    }
-    if(vel.magnitude() <0.1){
-      p.addForce(new Vec2D(random(-force,force), random(-force,force)));
-    }
-    p.scaleVelocity(random(0.01,1.5));
-  }
-}
-
-
-void die(){
-  for(Particle p: particles) { p.consume(); p.display();}
-  for (int i = particles.size() -1; i>=0; i--){
-    physics.removeParticle(particles.get(i));
-    particles.remove(i);
-  }
-  physics.update();
-  if(nAttr>0){
-    for (int i =0; i < nAttr; i++){
-      attractors.get(0).destroy();
-      attractors.remove(0);}
-      nAttr = attractors.size();
-  }
-}
-
-
-void create(){
-  for (int i = 0; i < nParticles; i++) {
-    particles.add(new Particle(startPos.get(i)));
-  } 
-  scrumble(4,10,10);
-  initMusic();
-}
-
-void send(){
-  Object [] args = {freq};
-  OSCsendMessage("/Control/setFreq", args);
   }
   
-void initMusic(){
-  Object [] args = {1, freq};
-  OSCsendMessage("/Background/Plate", args);
+  // when no resonance effect we call scrumble 
+  void scrumble(float jitter, float force, float scaleVel) {
+    physics.setDrag(0.05);
+    nAttr = attractors.size();
+    if(nAttr>0){
+    attractors.get(0).destroy();
+    for (int i =0; i < nAttr; i++)
+    {attractors.remove(0);}}
+      
+    for (Particle p: particles) {
+      Vec2D vel = p.getVelocity();
+      if(vel.magnitude() <= 0.8){
+        p.addVelocity(vel.jitter(random(-jitter,jitter),random(-jitter,jitter)));
+      }
+      if(vel.magnitude() <0.1){
+        p.addForce(new Vec2D(random(-force,force), random(-force,force)));
+      }
+      p.scaleVelocity(random(0.01,1.5));
+    }
   }
-void nextFreq(int delta){
-  freq += delta;
-  if(freq <= 40) freq = 518;
-  if(freq >= 518) freq =40;
-}
+  
+  // remove elements to save memory
+  void die(){
+    for(Particle p: particles) { p.consume(); p.display();}
+    for (int i = particles.size() -1; i>=0; i--){
+      physics.removeParticle(particles.get(i));
+      particles.remove(i);
+    }
+    physics.update();
+    if(nAttr>0){
+      for (int i =0; i < nAttr; i++){
+        attractors.get(0).destroy();
+        attractors.remove(0);}
+        nAttr = attractors.size();
+    }
+  }
+  
+  // create elements to save memories
+  void create(){
+    for (int i = 0; i < nParticles; i++) {
+      particles.add(new Particle(startPos.get(i)));
+    } 
+    scrumble(4,10,10);
+    initMusic();
+  }
+  
+  // send OSC control message
+  void send(){
+    Object [] args = {freq};
+    OSCsendMessage("/Control/setFreq", args);
+    }
+  // send init OSC message of the background  
+  void initMusic(){
+    Object [] args = {1, freq};
+    OSCsendMessage("/Background/Plate", args);
+    }
+  
+  // go to the next frequency
+  void nextFreq(int delta){
+    freq += delta;
+    if(freq < 40) {
+      freq = 518; //<>//
+    }
+    if(freq > 518) freq =40;
+  }
 }

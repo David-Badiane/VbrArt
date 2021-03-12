@@ -1,16 +1,16 @@
+// Cellular Automata representing the sun
+
 import toxi.color.*;
 
 class CA {
-
-  int[][] cells;     // An array of 0s and 1s 
-  int generation;  // How many generations?
-  int cols, rows;
-  float angle;
-  float radius;
-  int w = 1;  // Dimensions of a cell
-  int nStates = 255;
-  int mode = 0;
-  int mapwidth = 0;
+  // Members
+  int[][] cells;     // matrix containing cells
+  int cols, rows;    // cols, rows of the matrix
+  float radius;      // radius of the sun
+  int w = 1;         // dimensions of a cell
+  int nStates = 255; // number of possible states
+  int mode = 0;      // rules of life selector
+  int mapwidth = 0;  // controller of the gradient
   Vec2D center;
   Rect r;
   ToneMap toneMap;
@@ -57,7 +57,7 @@ class CA {
     gradient.addColorAt(205, NamedColor.GOLDENROD);
     toneMap=new ToneMap(0, nStates-1, gradient);
 }
-
+// CA in the ceneter, can set the colorGradient
 CA(ColorGradient gradient) {
     this.w = 2;
     this.center = new Vec2D (width/2, height/2);
@@ -75,11 +75,11 @@ CA(ColorGradient gradient) {
     toneMap=new ToneMap(0, nStates-1, gradient);
 }
 
-  // The process of creating the new generation
+  // The process of creating the new generation of cells
   void generate() {
-    // First we create an empty array for the new values
+    // First we create an empty matrix for the new values
     int[][] next = new int[cols][rows];
-    int [] neighbors = new int [9];
+    int [] neighbors = new int [9];    // the possible neighbors including the cell itself are nine
     
     // Loop through every spot in our 2D array and check spots neighbors
     for (int x = 1; x < cols-1; x++) {
@@ -115,52 +115,16 @@ CA(ColorGradient gradient) {
           if(mode == 4){
             if ((cells[x][y] == neighbors[i]))   {next[x][y] = (abs(cells[x][y]-1))%nStates;}
             if ((cells[x][y] == neighbors[i]-1)) {next[x][y] = (cells[x][y]+1)%nStates;}
-            //if ((cells[x][y] == neighbors[i]-2)) {next[x][y] = ((cells[x][y]*cells[x][y]))%nStates;}
             if ((cells[x][y] == neighbors[i]-3)) {next[x][y] = ((cells[x][y]*counter))%nStates;}
           }
         }
       }
     }
+    // update the cells matrix
     cells = next;
   }
-
-  /*void changeRules(){
-  for(int i = 0; i < ruleset.length; i++){
-  ruleset[i] = (int) random(0,2);
-  }
-  }*/
-
-
-  //void display() {
-  //  fill(255);
-  //  for (int i = 0; i < cols; i++) {
-  //    for (int j = 0; j < rows; j++) {
-      
-  //    float coordx = center.x - radius + (2*radius/cols)*i;
-  //    float coordy = center.y + radius - (2*radius/rows)*j;
-  //    Vec2D pos = new Vec2D(coordx, coordy);
-      
-  //    fill(0);
-  //    if (cells[i][j] == 1){ fill(255 ,160 ,16,155); colorMode(RGB);}
-  //    if (cells[i][j] == 2){ fill(240 ,64 ,16,200); colorMode(RGB);}
-  //    if (cells[i][j] == 3){ fill(192, 64, 16,200); colorMode(RGB);}
-  //    if (cells[i][j] == 4){ fill(255 ,144, 0,100); colorMode(RGB);}
-  //    if (cells[i][j] == 5){ fill(192 ,96 ,0,140); colorMode(RGB);}
-  //    if (cells[i][j] == 6){ fill(160 ,48 ,16,170); colorMode(RGB);}
-  //    if (cells[i][j] == 7){ fill(240 ,192 ,80,120); colorMode(RGB);}
-  //    if (cells[i][j] == 8){ fill(240,208,128,110); colorMode(RGB);}
-  //    if (cells[i][j] == 9){ fill(96 ,16 ,0,100); colorMode(RGB);}
-  //    if (cells[i][j] == 0){fill(255,240,20); colorMode(RGB);}
-      
-  //    noStroke();
-  //    if(pos.isInCircle(this.center, this.radius) == true){
-  //      if(pos.isInRectangle(r) == true){
-  //        rect(coordx, coordy, w, w);}};
-  //      }
-  //    }
-  //  }
-  
-   void display() {
+  // display functions
+  void display() {
     for (int i = 0; i < cols; i++) {
     for (int j = 0; j < rows; j++) {
     float coordx = center.x - radius + (2*radius/cols)*i;
@@ -175,28 +139,12 @@ CA(ColorGradient gradient) {
       }
     }
     
-  void displayA() {
-    int A =0;
-    for (int i = 0; i < cols; i++) {
-    for (int j = 0; j < rows; j++) {
-    float coordx = center.x - radius + (2*radius/cols)*i;
-    float coordy = center.y + radius - (2*radius/rows)*j;
-    Vec2D pos = new Vec2D(coordx, coordy);
-    int c = toneMap.getARGBToneFor(cells[i][j]*(100-mapwidth));
-      fill( c );
-      noStroke();
-      if(pos.isInCircle(this.center, this.radius*0.992) == true){
-        if(pos.isInRectangle(r) == true){
-          rect(coordx, coordy, 3*w, 3*w);}};
-        }
+  // Refillage of the sun cells
+  void scrumble(int number){
+    for(int i =0; i< this.cols;i++){
+      for(int j=0; j<this.rows;j++){
+        cells[i][j] = (int)random(number);
       }
     }
-
-void scrumble(int number){
-  for(int i =0; i< this.cols;i++){
-    for(int j=0; j<this.rows;j++){
-    cells[i][j] = (int)random(number);
-    }
   }
-}
 }
