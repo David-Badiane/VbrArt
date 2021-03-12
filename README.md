@@ -137,7 +137,7 @@ The final implementation should look like this:
 <p align ="center" > <img width ="600" height ="280" src = "/readme_images/arduino_real.jpg"> </p>
 
 ## Leap Motion setup
-Simply connect Leap Motion to the p, **place the Leap Motion so that the green Led is pointed towards you**.
+Simply connect Leap Motion to your laptop, **place the Leap Motion so that the green Led is pointed towards you**.
 If you use the standalone application, all libraries are already included. 
 If you run it on processing be sure to install Leap Motion for Processing.
 
