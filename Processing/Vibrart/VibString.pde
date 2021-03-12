@@ -73,7 +73,7 @@ class VibString {
        float theta = 0 ;
        for ( int i = 5; i < s.nodes.size()-5; i++){
          Particle p1 = s.nodes.get(i);
-         if (p1.getVelocity().magnitude() > 40 ){
+         if (p1.getVelocity().magnitude() > 70 ){
            Particle pAnimation = new Particle(p1.getPreviousPosition(),-0.05);
            particleAnimation.add(pAnimation);
            pAnimation.addForce(p1.getVelocity().getRotated(theta).scale(0.07));

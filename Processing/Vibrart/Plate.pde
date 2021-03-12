@@ -86,7 +86,7 @@ float [][] modes = {
                     0.26*w,  7*h/8, 0.74*w,  7*h/8}
                  };
   int freq;
-  float [] eigenfreqz = {0, 100, 140, 179, 220, 310, 400, 440, 4001};
+  float [] eigenfreqz = {0, 100, 140, 179, 220, 310, 400, 440, 540};
   int mode;
   float [] field = {0,w/4, 120, 90, 110, 90, 70, 55};        // fields of attractors for each mode
   float [] scaleForce = {0,1, 0.8,0.8, 0.9, 0.7, 0.9,0.7};   // fine adjustment of resonance for each mode
@@ -313,7 +313,7 @@ void initMusic(){
   }
 void nextFreq(int delta){
   freq += delta;
-  if(freq <40) freq = 4000;
-  if(freq >4000) freq =40;
+  if(freq <= 40) freq = 518;
+  if(freq >= 518) freq =40;
 }
 }
