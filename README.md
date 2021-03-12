@@ -123,10 +123,10 @@ Further informations can be found in the 'Presentation' pdf.
 **What is needed for the complete setup?**
 * Arduino Uno;
 * Arduino Breadboard;
-* 4 Button Switches;
+* 4 Tact Switches;
 * 4 Leds;
-* 1 Potentiometer;
-* Resistances;
+* 1 Potentiometer - 10k linear;
+* Resistances - 1 kOhm for switches, 150 Ohm for leds;
 * Jumpers;
 * The Arduino sketch that you can find in the repository;
 
