@@ -11,8 +11,8 @@ s.waitForBoot({
 ~doOnce = false;
 ~listenToPython = false;
 ~tonality = 0;
-~adjust = Array.fill(12, { arg i; 0 });
-~durationForRole = Array.fill(12, { arg i; [1,2,4].choose });
+~adjust = Array.fill(12, { arg i; 0 });    // adjust melody scale
+~durationForRole = Array.fill(12, { arg i; [1,2,4].choose }); // duration for Role of the note in the scale
 ~octave = 0;
 
 // Buffers used in granulator Grains, for vibratingWater
@@ -573,8 +573,7 @@ SynthDef("marimba", {arg freq = 440, amp = 0.4, pan = 0;
 				})
 			}
 		};
-			'mel'.postln;
-freq.postln;
+
 		// Play
 		Synth(\marimba, [ \amp, 1, \freq, freq]);
 		dur.wait;
@@ -615,9 +614,8 @@ freq.postln;
 				})
 			}
 		};
-			'mel'.postln;
+
 		// Play
-	freq.postln;
 		Synth(\melodyFM, [ \amp, 0.1, \freq, freq]);
 		Synth(\melodyFM, [ \amp, 0.1, \freq,4.02*freq]);
 		Synth(\melodyFM, [ \amp, 0.1, \freq,8.03*freq]);
