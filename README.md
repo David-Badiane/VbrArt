@@ -10,6 +10,7 @@
 </div>
 
 [Stadalone app for Linux](https://drive.google.com/file/d/1GwGIbqAN3qZ7Avxk31g-MEXY-Wsa2J_d/view?usp=sharing)
+
 [Standalone app for Windows](https://drive.google.com/file/d/11BVhGNGqTv0VDtXeEzXLKhSFNHP13A8x/view?usp=sharing)
 
 
