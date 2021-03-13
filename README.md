@@ -153,7 +153,8 @@ If you run it on processing be sure to install Leap Motion for Processing.
 4. Run Processing code or open the standalone application;
 5. Check if OSC messages are correctly functioning from Supercollider post window.
 
-If step 5 is valid, then everything is correctly set for VBrart. If not check the IP port and IP addresses.
+If step 5 is valid, then everything is correctly set for VbrArt. 
+If not check the IP port and IP addresses.
 Enjoy your play! 
 
 
