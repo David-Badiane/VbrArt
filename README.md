@@ -9,7 +9,7 @@
    </a>
 </div>
 
-[Processing stadalone app for Linux](https://drive.google.com/file/d/1GwGIbqAN3qZ7Avxk31g-MEXY-Wsa2J_d/view?usp=sharing)
+[Processing standalone app for Linux](https://drive.google.com/file/d/1GwGIbqAN3qZ7Avxk31g-MEXY-Wsa2J_d/view?usp=sharing)
 
 [Processing standalone app for Windows](https://drive.google.com/file/d/11BVhGNGqTv0VDtXeEzXLKhSFNHP13A8x/view?usp=sharing)
 
