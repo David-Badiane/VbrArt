@@ -101,7 +101,7 @@ Further informations can be found in the 'Presentation' pdf.
 ## Background related 
 **- vibratingPlate**
 1. Arduino Uno - the potentiometer value regulates the frequency of the simulation;
-2. the frequency of the simulation can be also variated by pressing the mouse - leftButton increase by 2 - rightButton decreae by 2;
+2. the frequency of the simulation can be also variated by pressing the mouse - leftButton increase by 2 - rightButton decrease by 2;
 
 **- vibratingWater**
 1. the Leap Motion cursor, when activated, excitates the water;
