@@ -34,7 +34,7 @@ In every background a physic representation of acoustic is depicted:
 * the 1st background simulates the Chladni patterns formation process  on a rectangular plate  - **vibratingPlate**; 
  <p align ="right" > <img width ="270" height ="160" src = "/readme_images/vibratingPlate.png"> </p>
  
-* the 2nd background consists of the simulation of a water drop - **vibratingWater**;
+* the 2nd background consists in the simulation of a water drop - **vibratingWater**;
  <p align ="right" > <img width ="270" height ="160" src = "/readme_images/vibratingWater.png"> </p>
  
 * the 3rd background represents a five strings acoustic instrument - **vibratingStrings**;
