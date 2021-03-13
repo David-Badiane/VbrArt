@@ -2,7 +2,7 @@
 
 <p align ="center" > <img width ="450" height ="280" src = "/readme_images/first.png"> </p>
 
-<p align ="center" > youtube demonstrative video </p>
+<p align ="center" > [youtube demonstrative video](https://www.youtube.com/watch?v=pIHimDycQJk) </p>
 <div align="center">
    <a href="https://www.youtube.com/watch?v=pIHimDycQJk" target="_blank"><img src="http://img.youtube.com/vi/pIHimDycQJk/0.jpg" 
                                                                             alt="youtube video" width="240" height="180" border="10" ></img>
