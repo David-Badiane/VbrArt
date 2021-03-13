@@ -101,7 +101,7 @@ Further informations can be found in the 'Presentation' pdf.
 ## Background related 
 **- vibratingPlate**
 1. Arduino Uno - the potentiometer value regulates the frequency of the simulation;
-2. the frequency of the simulation can be also variated by pressing the mouse;
+2. the frequency of the simulation can be also variated by pressing the mouse - leftButton increase by 2 - rightButton decreae by 2;
 
 **- vibratingWater**
 1. the Leap Motion cursor, when activated, excitates the water;
@@ -119,7 +119,7 @@ Further informations can be found in the 'Presentation' pdf.
 1. Leap Motion cursor:
   * when activated inside the sun, it changes it's modality of the sun's burning and the reference mode for music (**changeMode**); 
   * when deactivated inside the sun, it changes the color map colors and refills the sun matrix (**scrumble**);
-2. Mouse: when the mouse left button is pressed - **changeMode**;
+2. Mouse: leftButton pressed - **changeMode** //// rightButton pressed - **scrumble**;
 3. Keyboard: when left arrow of the keyboard is pressed - **scrumble**;
 
 # VbrArt - Setup and booting
