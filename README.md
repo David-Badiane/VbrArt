@@ -50,9 +50,9 @@ Interaction happens through Leap Motion tracking or MousePositions tracking.
 The simulation of chladni patterns is reality based:
 * Particles system where eigenmodes configurations are based on toxiclibs attractors and repulsors;
 * The user controls the frequency of the sinusoidal signal that stimulates vibrations in the virtual plate;
-* The attractive/repulsive forces are inversey proportional to the distance of the control frequency from the plate resonance frequencies;
+* The attractive/repulsive forces are inversely proportional to the distance of the control frequency from the plate resonance frequencies;
 * The eigenmode configuration is selected based on the distance of the control frequency from the plate resonance frequencies;
-* If the distance of the control frequency from the plate resonance frequencies is major than a given threshold, based on the distance between subsequent modes, the particles will move randomly;
+* If the distance of the control frequency from the plate resonance frequencies is major than a given threshold, based on the distance between control frequency and adjacent modes, the particles will move randomly;
 
 ### vibratingWater
 The simulation of water spherical wave propagation is based on:
