@@ -75,7 +75,7 @@ The simulation of string vibration is more musical, its characteristics are:
 ### vibratingSunset
 This scene is more like a picture that wants to make the user think and enjoy a digital dynamic painting characterised by:
 * The sun - a 2D cycle Cellular Automata (CA) based on five rules of life, set on a fire-like color gradient;
-* The sun CA is based on a matrix, rules of life, matrix initial fillage and the color gradient can be variated;
+* The sun CA is based on a matrix. Rules of life, matrix initial fillage and the color gradient can be variated;
 * The sea - a dynamic rectangle based on a color gradient where FFTLines grow;
 * FFTLines - lines that depict the sound spectrum at the given instant simulating waves (inspired by Unknown Pleasures - Joy Division);
 * The stars - sky objects that sparkle when certain Bins of the sound spectrum are filled;
