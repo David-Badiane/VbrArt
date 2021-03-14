@@ -131,7 +131,7 @@ Further informations can be found in the 'Presentation' pdf.
 
 **- vibratingSunset**
 1. Leap Motion cursor:
-  * when activated inside the sun, it changes it's modality of the sun's burning and the reference mode for music (**changeMode**); 
+  * when activated inside the sun, it changes its modality of the sun's burning and the reference mode for music (**changeMode**); 
   * when deactivated inside the sun, it changes the color map colors and refills the sun matrix (**scrumble**);
 2. Mouse: leftButton pressed - **changeMode** //// rightButton pressed - **scrumble**;
 3. Keyboard: when left arrow of the keyboard is pressed - **scrumble**;
@@ -169,6 +169,7 @@ If you run it on processing be sure to install Leap Motion for Processing.
 
 If step 5 is valid, then everything is correctly set for VbrArt. 
 If not check the IP port and IP addresses.
+
 Enjoy your play! 
 
 
