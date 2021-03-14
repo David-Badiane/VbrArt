@@ -24,16 +24,18 @@ Processing, Supercollider and Python frameworks are used to develop this project
 <p align ="center" > <img width ="600" height ="280" src = "/readme_images/blockDiagram.PNG"> </p>
 The graphic part and the user interaction (Leap Motion, Arduino Uno, mouse) are managed by <u>Processing<u>; you can find any part of the code related to graphics in the folder 'Processing'. 
    
-Main + 13 Classes on Processing, their structure is the subsequent :
+**Supercollider** handles the music framework of the entire project, you can find it in MusicFrameworkVibrart.scd .
+In the last world proposed, Sunset, also <u>Python<u> is used to develop a Markov chain able to generate chord sequences accordingly to a given harmony. 
+The **Python** code introduces more intelligence in the musical side of the project, giving it a more natural footprint; you can find the main program main.py and the Data folder in the Python folder.
+   
+Coming back to Processing code, it consists of one main program plus thirteen classes, which hierarchy is the subsequent:
+
 - Main = **Vibrart**  --> **Calls Scenery.update()**, global objects, timing, high level control of Leap Motion, choice of the background, mouse and keyboards interaction, provides OSC send and receive functions;
-- **Scenery** - Handler class --> In its update() function it handles selection and control of four Vibrating Element (VE) calling also **Plate//WaterDrops//VibString//Sunset.update()** accordingly to a global variable value;
-- **(VE)** - 4 Classes --> In their update() function they control the evolution of their objects, such as **Strings, Cellular Automata, Particles, Attractors, etc.**;
+- **Scenery** - Handler class --> In its update() function it handles selection and control of four Vibrating Elements (VE) calling also **currentVE.update()** accordingly to a global variable value;
+- **(VE)** - 4 Classes (Plate, WaterDrops, VibString, Sunset)  --> In their update() function they control the evolution of their objects, such as **Strings, Cellular Automata, Particles, Attractors, etc.**;
    - Each VE has a die(), create() that allow to optimise runtime memory in switching between backgrounds;
 - All Processing code is properly commented and easily readable;
    
-<u>Supercollider<u> handles the music framework of the entire project, you can find it in MusicFrameworkVibrart.scd .
-In the last world proposed, Sunset, also <u>Python<u> is used to develop a Markov chain able to generate chord sequences accordingly to a given harmony. 
-The Python code introduces more intelligence in the musical side of the project, giving it a more natural footprint; you can find the main program main.py and the Data folder in the Python folder.
 
 ## Inside the scene
 The four scenerios consist of four different background. 
