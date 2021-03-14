@@ -22,7 +22,7 @@ VbrArt is an interactive artistic installation created by David Badiane, Marco D
 The user can choose between four different worlds, each of which represent an acoustic feature. 
 Processing, Supercollider and Python frameworks are used to develop this project, they can be thought as blocks performing given tasks that commuincate one another using OSC protocol.
 <p align ="center" > <img width ="600" height ="280" src = "/readme_images/blockDiagram.PNG"> </p>
-The graphic part and the user interaction (Leap Motion, Arduino Uno, mouse) are managed by <u>Processing<u>; you can find any part of the code related to graphics in the folder 'Processing'. 
+The graphic part and the user interaction (Leap Motion, Arduino Uno, mouse) are managed by **Processing**; you can find any part of the code related to graphics in the folder 'Processing'. 
    
 **Supercollider** handles the music framework of the entire project, you can find it in MusicFrameworkVibrart.scd .
 In the last world proposed, Sunset, also <u>Python<u> is used to develop a Markov chain able to generate chord sequences accordingly to a given harmony. 
@@ -59,7 +59,7 @@ Interaction happens through Leap Motion tracking or MousePositions tracking.
 
 ### vibratingPlate
 The simulation of Chladni patterns is reality based:
-* **Particles system** where eigenmodes configurations are based on toxiclibs attractors and repulsors, notable members are;
+* **Particles system** where eigenmodes configurations are based on toxiclibs attractors and repulsors, notable members are:
    * map of Attractors/repulsors position and force for each eigenMode configuration;
    * eigenfrequencies;
 * The user controls the frequency of the sinusoidal signal that stimulates vibrations in the virtual plate;
