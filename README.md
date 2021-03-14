@@ -47,7 +47,7 @@ The user can play with one background at a time, giving vent to his creativity.
 Interaction happens through Leap Motion tracking or MousePositions tracking.
 
 ### vibratingPlate
-The simulation of chladni patterns is reality based:
+The simulation of Chladni patterns is reality based:
 * Particles system where eigenmodes configurations are based on toxiclibs attractors and repulsors;
 * The user controls the frequency of the sinusoidal signal that stimulates vibrations in the virtual plate;
 * The attractive/repulsive forces are inversely proportional to the distance of the control frequency from the plate resonance frequencies;
