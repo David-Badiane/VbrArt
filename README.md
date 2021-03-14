@@ -23,12 +23,20 @@ The user can choose between four different worlds, each of which represent an ac
 Processing, Supercollider and Python frameworks are used to develop this project, they can be thought as blocks performing given tasks that commuincate one another using OSC protocol.
 <p align ="center" > <img width ="600" height ="280" src = "/readme_images/blockDiagram.PNG"> </p>
 The graphic part and the user interaction (Leap Motion, Arduino Uno, mouse) are managed by <u>Processing<u>; you can find any part of the code related to graphics in the folder 'Processing'. 
+   
+Main + 13 Classes on Processing, their structure is the subsequent :
+- Main = **Vibrart**  --> **Calls Scenery.update()**, global objects, timing, high level control of Leap Motion, choice of the background, mouse and keyboards interaction, provides OSC send and receive functions;
+- **Scenery** - Handler class --> In its update() function it handles selection and control of four Vibrating Element (VE) calling also **Plate//WaterDrops//VibString//Sunset.update()** accordingly to a global variable value;
+- **(VE)** - 4 Classes --> In their update() function they control the evolution of their objects, such as **Strings, Cellular Automata, Particles, Attractors, etc.**;
+   - Each VE has a die(), create() that allow to optimise runtime memory in switching between backgrounds;
+- All Processing code is properly commented and easily readable;
+   
 <u>Supercollider<u> handles the music framework of the entire project, you can find it in MusicFrameworkVibrart.scd .
 In the last world proposed, Sunset, also <u>Python<u> is used to develop a Markov chain able to generate chord sequences accordingly to a given harmony. 
 The Python code introduces more intelligence in the musical side of the project, giving it a more natural footprint; you can find the main program main.py and the Data folder in the Python folder.
 
 ## Inside the scene
-The four scenerios consist of four different backgrounds. 
+The four scenerios consist of four different background. 
 The design is strictly exploratory, the scenes are designed so that the user becomes curious about them and starts playing with them, leaving a mark into the scene and evolving the artwork in an individual way.
 In every background a physic representation of acoustic is depicted: 
 * the 1st background simulates the Chladni patterns formation process  on a rectangular plate  - **vibratingPlate**; 
@@ -48,7 +56,9 @@ Interaction happens through Leap Motion tracking or MousePositions tracking.
 
 ### vibratingPlate
 The simulation of Chladni patterns is reality based:
-* Particles system where eigenmodes configurations are based on toxiclibs attractors and repulsors;
+* **Particles system** where eigenmodes configurations are based on toxiclibs attractors and repulsors, notable members are;
+   * map of Attractors/repulsors position and force for each eigenMode configuration;
+   * eigenfrequencies;
 * The user controls the frequency of the sinusoidal signal that stimulates vibrations in the virtual plate;
 * The attractive/repulsive forces are inversely proportional to the distance of the control frequency from the plate resonance frequencies;
 * The eigenmode configuration is selected based on the distance of the control frequency from the plate resonance frequencies;
@@ -60,7 +70,8 @@ The simulation of water spherical wave propagation is based on:
 * The finite difference equation that governs spherical waves propagation;
 * The application of point loads (stimulus);
 * A color gradient of watery colors;
-* Damping modeling - in order to recreate water texture we set the damping of the wave propagation to be way less if the energy in the given cell is less than a given threshold, this will make the wave fade away more slowly and create a watery texture;
+* Damping modeling -  piecewise constant damping :
+   *  **5% loss if** the matrix cell value is major than a treshold **(Element_i,j >= 3)**, **else 1.3% loss (Element_i,j < 3)** - this enables a more permanent watery texture;
 * The musical background, which is in turn based on granular synthesis;
 * The correspondance between application of the stimulus and a sound signal from an scl Synth;
 
