@@ -33,7 +33,8 @@ Coming back to Processing code, it consists of one main program plus thirteen cl
 - Main = **Vibrart**  --> **Calls Scenery.update()**, global objects, timing, high level control of Leap Motion, choice of the background, mouse and keyboards interaction, provides OSC send and receive functions;
 - **Scenery** - Handler class --> In its update() function it handles selection and control of four Vibrating Elements (VE) calling also **currentVE.update()** accordingly to a global variable value;
 - **(VE)** - 4 Classes (Plate, WaterDrops, VibString, Sunset)  --> In their update() function they control the evolution of their objects, such as **Strings, Cellular Automata, Particles, Attractors, etc.**;
-   - Each VE has a die(), create() that allow to optimise runtime memory in switching between backgrounds;
+   - Each VE has their die(), create() method that allow to optimise runtime memory in switching between backgrounds;
+   - Each VE has its send() method in order to send their OSC messages;
 - All Processing code is properly commented and easily readable;
    
 
